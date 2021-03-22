@@ -1,6 +1,6 @@
 ---
 title: Vue - 父組件傳遞到子組件的  props 語法
-date: 2021/03/08
+date: 2021/03/02
 tags:
   - Vue
   - props
