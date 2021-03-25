@@ -18,6 +18,7 @@ description: 了解 eventListener 與 callback function
 2. 雙擊 (dblclick)
 3. 滑鼠移入 (mouseenter)
 4. 滑鼠移出 (mouseleave)
+<!--more-->
 
 ### 1. 單擊 (click) & 雙擊 (dblclick)
 

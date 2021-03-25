@@ -15,6 +15,7 @@ description: 了解 eventListener 與 callback function
 1. 介面:如何改變事件
 2. 事件:如何監聽事件並做出反應
 3. 資料:如何跟 sever 交換資料
+<!--more-->
 
 ---
 

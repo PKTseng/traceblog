@@ -5,6 +5,8 @@ tags: Loading
 categories: Loading
 ---
 
+<!--more-->
+
 [套件](https://github.com/ankurk91/vue-loading-overlay)
 首先安裝 npm: `npm install vue-loading-overlay`
 再到 main.js 載入

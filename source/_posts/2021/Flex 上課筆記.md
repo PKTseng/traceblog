@@ -13,6 +13,8 @@ flex-direction:決定 flex 軸線
 justify-content:主要軸線的對齊
 align-items:交錯軸線的對齊
 
+<!--more-->
+
 ## Flex 外層屬性 (container) 介紹
 
 父元素有 display:flex，內層子元素之間的比例就會自動調整位置

@@ -1,6 +1,6 @@
 ---
 title: Vue - 判斷式
-date: 2021/03/04
+date: 2020/08/08
 tags: v-if
 categories:
   - Vue
@@ -10,7 +10,9 @@ description: 介紹 v-if 跟 v-show 的差別
 ## v-if
 
 [CodePen](https://codepen.io/gleofgja/pen/ZEQgEoG?editors=1010)
-我想透過勾選來決定要不要顯示 h1 標籤的內容，顯用 `v-model` 綁定屬性，再用 `v-if` 判斷決定與否
+我想透過勾選來決定要不要顯示 `h1` 標籤的內容，顯用 `v-model` 綁定屬性，再用 `v-if` 判斷決定與否
+
+<!-- more -->
 
 ```html
 <div id="app">

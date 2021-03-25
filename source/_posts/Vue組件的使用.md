@@ -1,6 +1,6 @@
 ---
 title: Vue - 組件的使用
-date: 2021/03/06
+date: 2020/09/06
 tags: component
 categories: Vue
 description: Vue 組件是預先定義好的模組，把這些模組獨立出來並重複使用，這樣在開發上就可以只專注在一小區塊
@@ -8,7 +8,7 @@ description: Vue 組件是預先定義好的模組，把這些模組獨立出來
 
 Vue 組件是預先定義好的模組，包含 html 的視覺元素、綁定的資料跟偵聽器..等等，類似 Vue 實例，組件的好處是可以重複使用，在開發上可以只專注在一小區塊，維護也很方便
 
-`Vue.component` 前面會先傳入參數的名稱，後面的參數是 option ，option 是用模板 `template` 定義視覺元素，也直接在模板裡面去定義內容，舉例 : 在模板裡面定義 html 的內容 (hello world) ，然後在 html 裡面定義 `#app` 並在裡面放入 `my-component` 標籤，而 `my-component` 並非是 html 標籤，是我在 `Vue.component` 定義好的。
+`Vue.component` 前面會先傳入參數的名稱，後面的參數是 `option` ，`option` 是用模板 `template` 定義視覺元素，也直接在模板裡面去定義內容，舉例 : 在模板裡面定義 html 的內容 ( hello world ) ，然後在 html 裡面定義 `#app` 並在裡面放入 `my-component` 標籤，而 `my-component` 並非是 html 標籤，是我在 `Vue.component` 定義好的。
 
 `Vue.component` 有個特別的規範，就是前面的參數要全小寫並加上「 - 」分開，請養成習慣!，同時 `Vue.component` 的宣告必須在 `new Vue` 之前
 
@@ -30,7 +30,7 @@ Vue 組件是預先定義好的模組，包含 html 的視覺元素、綁定的�
 ```
 
 此範例是全域都可以使用的
-[codepen](https://codepen.io/gleofgja/pen/mdPEaEo?editors=1010)
+[codePen](https://codepen.io/gleofgja/pen/mdPEaEo?editors=1010)
 
 ---
 
@@ -46,15 +46,15 @@ Vue 組件是預先定義好的模組，包含 html 的視覺元素、綁定的�
     el: '#app',
     components: {
       'my-component': {
-        template: '<div>hello wrold</div>',
+        template: '<div>hello world</div>',
       },
     },
   })
 </script>
 ```
 
-在 new Vue 裡面給一個屬性 components，屬性的 key 是字串 key `my-component` 也是組件名稱
-[codepen](https://codepen.io/gleofgja/pen/xxVEmOL?editors=1010)
+在 `new Vue` 裡面給一個屬性 `components` ，屬性的 `key` 是字串 key `my-component` 也是組件名稱
+[codePen](https://codepen.io/gleofgja/pen/xxVEmOL?editors=1010)
 
 ---
 
@@ -73,7 +73,7 @@ Vue 組件是預先定義好的模組，包含 html 的視覺元素、綁定的�
     el: '#app',
     components: {
       'my-component': {
-        template: '<div>hello wrold</div>',
+        template: '<div>hello world</div>',
       },
     },
   })
@@ -99,7 +99,7 @@ Vue 組件是預先定義好的模組，包含 html 的視覺元素、綁定的�
 
 <script>
   Vue.component('my-component', {
-    template: '<div>hello wrold</div>',
+    template: '<div>hello world</div>',
   })
 
   new Vue({
@@ -113,7 +113,7 @@ Vue 組件是預先定義好的模組，包含 html 的視覺元素、綁定的�
 ```
 
 這樣就會有兩個實例
-[codepen](https://codepen.io/gleofgja/pen/NWNReXP?editors=1010)
+[codePen](https://codepen.io/gleofgja/pen/NWNReXP?editors=1010)
 
 ![](https://i.imgur.com/AT9IjlF.png)
 

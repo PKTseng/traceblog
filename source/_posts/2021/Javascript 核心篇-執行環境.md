@@ -11,6 +11,8 @@ JavaScript 是直譯式語言
 window === this
 但 this 會隨執行環境而有所不同
 
+<!--more-->
+
 ## 語法作用域 (Lexical scope)
 
 ```javascript
