@@ -39,7 +39,7 @@ test2.call(obj) // "外層"
 
 總結:
 test1 具名函示的 this 會指向<font color=#FF0000>函示作用域下</font>命名變數的 this 值。
-test2 箭頭函示的 this 會指向<font color=#FF0000> window 作用域</font>命名的變數。
+test2 箭頭函示的 this 會指向<font color=#FF0000>聲明時</font>所在作用域下的 this 值。
 
 [codePen](https://codepen.io/gleofgja/pen/jOyPdrL?editors=1012)
 
