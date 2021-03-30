@@ -38,7 +38,7 @@ test2.call(obj) // "外層"
 如果想改變函示內的 this 值可以用 call 方法，但從結果來看，這對箭頭函式來說是無效的。
 
 總結:
-test1 具名函示的 this 會指向<font color=#FF0000>函示作用域下</font>命名變數的 this 值。
+test1 具名函示的 this 會指向<font color=#FF0000>跟函示同層作用域下</font>命名變數的 this 值。
 test2 箭頭函示的 this 會指向<font color=#FF0000>聲明時</font>所在作用域下的 this 值。
 
 [codePen](https://codepen.io/gleofgja/pen/jOyPdrL?editors=1012)
