@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript - 執行環境 - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="介紹 Javascript 如何執行跟作用域">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript - 執行環境
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-06-12T16:00:00.000Z" itemprop="datePublished">2020年6月13日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分鐘 讀完 (約 1589 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>JavaScript 是直譯式語言<br>當 JavaScript 在函示內找不到變數就會向外查找<br>window === this<br>但 this 會隨執行環境而有所不同</p>
+<a id="more"></a>
+
+<h2 id="語法作用域-Lexical-scope"><a href="#語法作用域-Lexical-scope" class="headerlink" title="語法作用域 (Lexical scope)"></a>語法作用域 (Lexical scope)</h2><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> value = <span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn1</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(value) <span class="hljs-comment">// 語法作用域：1</span></span><br><span class="line">  <span class="hljs-comment">// 動態作用域：2</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn2</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> value = <span class="hljs-number">2</span></span><br><span class="line">  fn1()</span><br><span class="line">}</span><br><span class="line">fn2()</span><br></pre></td></tr></tbody></table></figure>
+
+<ol>
+<li><p><strong>語法作用域的順序:</strong><br>(因為 JS 式語法作用域，所以會跑這個步驟)fu2 執行 value 值就會變 2 ，在執行 fn1 ，因為裡面沒有 value 值所以會向外查找全域變數 value = 1，函式執行完結果為 1</p>
+</li>
+<li><p><strong>動態作用域的順序:</strong><br>全域賦予 value=1，這時候會執行 fn2 ，並且重新定義 value = 2 ，再執行 fn1 ，這時會開始查找 value 值在哪裡，這時因為函式調用的時候才會決定它的作用域，並向上一層函式查找宣告的變數值</p>
+<hr>
+</li>
+</ol>
+<h2 id="範圍鍊"><a href="#範圍鍊" class="headerlink" title="範圍鍊"></a>範圍鍊</h2><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> person = <span class="hljs-string">'老媽'</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sayHi</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hi '</span> + person)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doMorningWork</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> person = <span class="hljs-string">'老爸'</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">meetAuntie</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">var</span> person = <span class="hljs-string">'漂亮阿姨'</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'哈囉～ '</span> + person)</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// sayHi();</span></span><br><span class="line">  <span class="hljs-comment">//meetAuntie();</span></span><br><span class="line">}</span><br><span class="line">sayHi()</span><br><span class="line"><span class="hljs-comment">//doMorningWork();  // 執行</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>因為 sayHi function 裡面沒有 person 變數，所以會向外尋找<br><img src="https://i.imgur.com/lATjYBE.png"></p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> person = <span class="hljs-string">'老媽'</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sayHi</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hi '</span> + person)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doMorningWork</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> person = <span class="hljs-string">'老爸'</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">meetAuntie</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">var</span> person = <span class="hljs-string">'漂亮阿姨'</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'哈囉～ '</span> + person)</span><br><span class="line">  }</span><br><span class="line">  sayHi()</span><br><span class="line">  <span class="hljs-comment">//meetAuntie();</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">//sayHi();</span></span><br><span class="line">doMorningWork() <span class="hljs-comment">// 執行</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>doMorningWork 函式雖然有 person 變數，但不會影響到 sayHi 函式的範圍練，所以 sayHi 函式一樣會向外尋找 person 變數<br><img src="https://i.imgur.com/lbU8OCA.png"></p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> person = <span class="hljs-string">'老媽'</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sayHi</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hi '</span> + person)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doMorningWork</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> person = <span class="hljs-string">'老爸'</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">meetAuntie</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">var</span> person = <span class="hljs-string">'漂亮阿姨'</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'哈囉～ '</span> + person)</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// sayHi();</span></span><br><span class="line">  meetAuntie()</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">//sayHi();</span></span><br><span class="line">doMorningWork() <span class="hljs-comment">// 執行</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>因為 meetAuntie 函式本身就有 person 變數，所以不會像尋找，結果為 哈囉~ 漂亮阿姨<br>如果把 var person = ‘漂亮阿姨’; 註解掉，那 person 變數會向外尋找。結果為 哈囉~老爸</p>
+<h4 id="論是-只要函式內沒找到相對應的變數，就會像向外一層尋找相對應的變數，直到找到為止"><a href="#論是-只要函式內沒找到相對應的變數，就會像向外一層尋找相對應的變數，直到找到為止" class="headerlink" title="論是: 只要函式內沒找到相對應的變數，就會像向外一層尋找相對應的變數，直到找到為止"></a>論是: 只要函式內沒找到相對應的變數，就會像向外一層尋找相對應的變數，直到找到為止</h4><hr>
+<h2 id="提升"><a href="#提升" class="headerlink" title="提升"></a>提升</h2><p><img src="https://i.imgur.com/uXG14Oe.png"><br>先想像記憶體是成對的，左邊的格子表示 key，右邊是 value。<br>再創造環境的時候，會先把 a (變數)放到記憶體裡面(左邊格子)，但這時候還不會給 a 值，所以用 console.log 的時候會 defined ，等到執行時才會把 1 套到 a 裡面。</p>
+<p>所以執行環境的時候會先創造環境，創造環境會先把程式碼裡面的變數全部挑出來並存在記憶體上，這個動作稱為”提升 Hoisting”，在這個階段還不會給他值，所以如果在此時去取用這些變數的話，值會是 undefined。到執行環境的時候才會賦予它的值</p>
+<p><img src="https://i.imgur.com/GRULStI.png"></p>
+<p>再創造階段 a 是沒有值的，所以會顯示 undefined，直到宣告階段才會把值帶入 。<br>但是函式會把整個函式內容都先載入，所以<strong>函式再創造階段就已經可以運行了</strong>。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> ming <span class="hljs-comment">//創造階段</span></span><br><span class="line">ming = <span class="hljs-string">'小名'</span> <span class="hljs-comment">//執行</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'ming'</span>)</span><br><span class="line"></span><br><span class="line">callName()</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callName</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'呼叫小名'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">//會等於下列</span></span><br><span class="line"><span class="hljs-comment">//-----------------------</span></span><br><span class="line"><span class="hljs-comment">//創造階段</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callName</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'呼叫小名'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">//執行</span></span><br><span class="line">callName()</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/I8kQ3ob.png"></p>
+<h3 id="函式表達式寫法"><a href="#函式表達式寫法" class="headerlink" title="函式表達式寫法:"></a>函式表達式寫法:</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">callName() <span class="hljs-comment">//這時候的 callName 是還沒有被定義的</span></span><br><span class="line"><span class="hljs-keyword">var</span> callName = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'呼叫小名'</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>輸出如下圖:<br><img src="https://i.imgur.com/32RDACz.png"></p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//創造階段</span></span><br><span class="line"><span class="hljs-keyword">var</span> callName(); <span class="hljs-comment">//這時候 callName 被定義了但沒給值，所以會undefine</span></span><br><span class="line"><span class="hljs-comment">//執行</span></span><br><span class="line">callName = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{ <span class="hljs-comment">//這時 function 已經被賦予到 callName  這個函式上</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'呼叫小名'</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line"> callName(); <span class="hljs-comment">//才可呼叫</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/ddWNmYt.png"></p>
+<h3 id="範例"><a href="#範例" class="headerlink" title="範例:"></a>範例:</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// var callName = function () {</span></span><br><span class="line"><span class="hljs-comment">//   console.log('呼叫小明 2');</span></span><br><span class="line"><span class="hljs-comment">// }</span></span><br><span class="line"><span class="hljs-comment">// function callName() {</span></span><br><span class="line"><span class="hljs-comment">//   console.log('呼叫小明 1');</span></span><br><span class="line"><span class="hljs-comment">// }</span></span><br><span class="line"><span class="hljs-comment">// callName();</span></span><br><span class="line"><span class="hljs-comment">//以上為原式</span></span><br><span class="line"><span class="hljs-comment">//-----------------------------------</span></span><br><span class="line"><span class="hljs-comment">//拆解過後</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callName</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 首先函式優先 創造階段</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'呼叫小明 1'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">var</span> callName <span class="hljs-comment">//第2階段才把變數往前移</span></span><br><span class="line">callName = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">//因為變數往前移的關係，這時 function 已經被賦予到 callName  這個函式上</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'呼叫小明 2'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">//執行</span></span><br><span class="line">callName()</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/uPdFhSw.png"></p>
+<h2 id="範例-1"><a href="#範例-1" class="headerlink" title="範例:"></a>範例:</h2><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//創造，函式陳述式優先創造</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callName</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'小明'</span>)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">callName() <span class="hljs-comment">// 第一次執行</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callName</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'杰倫'</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/FwfUh7L.png"></p>
+<h2 id="拆解-amp-分析"><a href="#拆解-amp-分析" class="headerlink" title="拆解&amp;分析:"></a>拆解&amp;分析:</h2><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 創造</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callName</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'小明'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callName</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'杰倫'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// 執行</span></span><br><span class="line">callName() <span class="hljs-comment">// 第一次執行</span></span><br><span class="line">callName() <span class="hljs-comment">// 第二次執行</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>兩個函式長一樣，後面得值會蓋掉前面的值</p>
+<h3 id="測驗分析"><a href="#測驗分析" class="headerlink" title="測驗分析:"></a>測驗分析:</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">whosName</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">if</span> (name) {</span><br><span class="line">    name = <span class="hljs-string">'杰倫'</span></span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">'小明'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(name)</span><br><span class="line">whosName()</span><br></pre></td></tr></tbody></table></figure>
+
+<p>因為創造階段，函式陳述式優先創造，變數 name 只生出記憶體，並未賦予值執行階段，呼叫 whosName 的函式時，name 向外查找 name 變數，但未賦予值，所以在 whosName 裡面的 name 被賦予為”杰倫”的值<br>函式跟一般變數不太一樣，函式陳述式在創造環境階段會被優先載入，記憶體在這個階段就會有函式的完整內容。所以函式在創造環境階段就已經可以被運行。</p>
+<h2 id="Not-Defined-VS-undefined"><a href="#Not-Defined-VS-undefined" class="headerlink" title="Not Defined VS undefined"></a>Not Defined VS undefined</h2><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var a ;</span><br><span class="line">console.log(a) //輸出 undefined</span><br></pre></td></tr></tbody></table></figure>
+
+<p>因為記憶體已經有 a 了，但沒有賦值，所以會跳 undefined<br>同理，記憶體沒有 a 就會跳 Not Defined</p>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//如果要賦予空值要寫</span><br><span class="line">var a = null;</span><br></pre></td></tr></tbody></table></figure>
+
+<hr>
+<h2 id="執行緒與同步、非同步"><a href="#執行緒與同步、非同步" class="headerlink" title="執行緒與同步、非同步"></a>執行緒與同步、非同步</h2><p>JavaScript 是單執行序的語言</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">eatBreakfast</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'吃早餐'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">washingPlate</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'洗餐盤'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callSomeone</span>(<span class="hljs-params">someone</span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'打給'</span> + someone)</span><br><span class="line">  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-comment">//這段為非同步，而非同步的任務會移到事件佇列</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(someone + <span class="hljs-string">'回電'</span>)</span><br><span class="line">  }, <span class="hljs-number">1000</span>) <span class="hljs-comment">//就算這邊秒數調成0秒，也不會優先執行</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doWork</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> auntie = <span class="hljs-string">'漂亮阿姨'</span></span><br><span class="line">  eatBreakfast()</span><br><span class="line">  callSomeone(auntie)</span><br><span class="line">  washingPlate()</span><br><span class="line">}</span><br><span class="line">doWork()</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/2aFzBGJ.png"></p>
+<p>同步概念來看的話，這三個概念是依序執行的，不會有早餐沒吃完就跳到洗碗盤去</p>
+<p><img src="https://i.imgur.com/iVYdmVA.png"><br><img src="https://i.imgur.com/WYchUh0.png"></p>
+<hr>
+<p>執行順序為:</p>
+<ol>
+<li>do work</li>
+<li>吃早餐</li>
+<li>打給漂亮阿姨，但因為裡面有 SetTimeout 事件，所以會移到”事件佇列”裡面</li>
+<li>洗碗</li>
+<li>直到 do work 執行完後才會再去執行 SetTimeout 函式<br><img src="https://i.imgur.com/aNRGXtW.png"></li>
+</ol>
+<hr>
+<h2 id="參考資料-JavaScript-核心篇"><a href="#參考資料-JavaScript-核心篇" class="headerlink" title="參考資料: JavaScript 核心篇"></a><a target="_blank" rel="noopener" href="https://courses.hexschool.com/courses/enrolled/670037">參考資料: JavaScript 核心篇</a></h2></body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83/">#執行環境</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2020/07/16/JavaScript%20%E7%B6%B2%E9%A0%81%E4%BA%8B%E4%BB%B6%E8%99%95%E7%90%86/">JavaScript - 監聽事件</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2020/06/13/Flex%20%E4%B8%8A%E8%AA%B2%E7%AD%86%E8%A8%98/">Html - Flex 上課筆記</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2020/06/13/Javascript%20%E6%A0%B8%E5%BF%83%E7%AF%87-%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83/';
+        this.page.identifier = '2020/06/13/Javascript 核心篇-執行環境/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

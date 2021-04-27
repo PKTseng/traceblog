@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript 實作 - 拖曳效果 - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="每記錄一次就會比昨天的自己更加厲害">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript 實作 - 拖曳效果
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2021-02-07T16:00:00.000Z" itemprop="datePublished">2021年2月8日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><span>></span><a class="article-category-link" href="/categories/JavaScript/%E4%BD%9C%E5%93%81%E9%9B%86/">作品集</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分鐘 讀完 (約 1671 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h2 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述:"></a>功能描述:</h2><ol>
+<li>刷新頁面打亂排列順序。</li>
+<li>可以拖曳方塊排列順序。</li>
+<li>確認排列順序是否正確。</li>
+</ol>
+<p><img src="https://i.imgur.com/1xYdtS0.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PKTseng/Web-Side-Project/tree/gh-pages/mission30">Github</a><br><a href="https://pktseng.github.io/Web-Side-Project/mission30/index.html">Demo</a></p>
+<a id="more"></a>
+
+<h2 id="架構"><a href="#架構" class="headerlink" title="架構"></a>架構</h2><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>苗栗國必去前10名景點<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>請利用拖曳排列出這10名的順序<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"draggable-list"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"draggable-list"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"check-btn"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"check-btn"</span>&gt;</span></span><br><span class="line">  Check Attractions</span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fas fa-paper-plane"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>拖曳方塊不能寫死，因為每次刷新頁面順序會打亂，打亂的順序排名用 javascript 撰寫。</p>
+<h2 id="CSS-樣式"><a href="#CSS-樣式" class="headerlink" title="CSS 樣式"></a>CSS 樣式</h2><p>拖曳的時候會呈現色差</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.draggable-list</span> <span class="hljs-selector-tag">li</span><span class="hljs-selector-class">.over</span> <span class="hljs-selector-class">.draggable</span> {</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#eaeaea</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>用顏色確認目前排列順序是否正確。</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.draggable-list</span> <span class="hljs-selector-tag">li</span><span class="hljs-selector-class">.right</span> <span class="hljs-selector-class">.person-name</span> {</span><br><span class="line">  <span class="hljs-attribute">color</span>: <span class="hljs-number">#3ae374</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.draggable-list</span> <span class="hljs-selector-tag">li</span><span class="hljs-selector-class">.wrong</span> <span class="hljs-selector-class">.person-name</span> {</span><br><span class="line">  <span class="hljs-attribute">color</span>: <span class="hljs-number">#ff3838</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>按鈕縮放效果</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.check-btn</span><span class="hljs-selector-pseudo">:active</span> {</span><br><span class="line">  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">scale</span>(<span class="hljs-number">0.98</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>點擊按鈕不要有邊框線條</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.check-btn</span><span class="hljs-selector-pseudo">:focus</span> {</span><br><span class="line">  <span class="hljs-attribute">outline</span>: none;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><h3 id="1-綁定-DOM-，給初始值"><a href="#1-綁定-DOM-，給初始值" class="headerlink" title="1. 綁定 DOM ，給初始值"></a>1. 綁定 DOM ，給初始值</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> draggableList = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#draggable-list'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> checkBtn = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#check-btn'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> attractions = [</span><br><span class="line">  <span class="hljs-string">'客家大院'</span>,</span><br><span class="line">  <span class="hljs-string">'後龍鎮半天寮休閒文化園區 - 好望角'</span>,</span><br><span class="line">  <span class="hljs-string">'天空之城'</span>,</span><br><span class="line">  <span class="hljs-string">'九華山 天空步道'</span>,</span><br><span class="line">  <span class="hljs-string">'苗栗客家圓樓'</span>,</span><br><span class="line">  <span class="hljs-string">'雅聞七里香玫瑰森林'</span>,</span><br><span class="line">  <span class="hljs-string">'龍騰斷橋(魚藤坪斷橋)'</span>,</span><br><span class="line">  <span class="hljs-string">'飛牛牧場'</span>,</span><br><span class="line">  <span class="hljs-string">'銅鑼炮仗花海公園'</span>,</span><br><span class="line">  <span class="hljs-string">'舊銅鑼隧道'</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">let</span> dragStartIndex</span><br><span class="line"><span class="hljs-keyword">const</span> listItems = []</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-產生-DOM-並呈現在畫面上"><a href="#2-產生-DOM-並呈現在畫面上" class="headerlink" title="2. 產生 DOM 並呈現在畫面上"></a>2. 產生 DOM 並呈現在畫面上</h3><blockquote>
+<p>展開運算符 ( Spread Operator ) :<br>是把一個陣列展開成個別值，這個運算符後面必定接著一個陣列。<br>最常見的是用來組合 ( 連接 ) 陣列。</p>
+</blockquote>
+<blockquote>
+<p>其餘運算符 ( Rest Operator ) :<br>是收集其餘的 ( 剩餘的 ) 這些值，轉變成一個陣列。它會用在函式定義時的傳入參數識別名定義 ( 其餘參數, Rest parameters )，以及解構賦值時</p>
+<p>以上兩點引述自 : <a target="_blank" rel="noopener" href="https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/rest_spread.html">展開運算符與其餘運算符</a></p>
+</blockquote>
+<p><code>setAttribute( 'data-名稱', 'value 值')</code> : 設定元件屬性，就是在元件上賦予名字跟值。<br>不過這命名不能亂命，為了方面辨識或是避免搞混，在名稱前面會加上 <code>data-</code> 。<br>以下範例用 <code>console</code> 查看<br><img src="https://i.imgur.com/tx1LA4c.png"></p>
+<p>不過上面值是 <code>number</code> ，如果是字串要用 <code>string</code>，以下示範</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 加兩個屬性</span></span><br><span class="line">listItem.setAttribute(<span class="hljs-string">'data-id'</span>, <span class="hljs-string">'dataId'</span>)</span><br><span class="line">listItem.setAttribute(<span class="hljs-string">'data-name'</span>, <span class="hljs-string">'dataName'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/DuEqPBg.png"></p>
+<p>利用<strong>展開運算符</strong>把陣列內的景點變成個別的值，再用 <code>forEach</code> 產生每筆資料，每筆資料用 <code>setAttribute</code> 設定索引值，再把資料加入倒 <code>ul</code> 元件底下。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">creatListItem()</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">creatListItem</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  ;[...attractions].forEach(<span class="hljs-function">(<span class="hljs-params">person, index</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> listItem = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'li'</span>)</span><br><span class="line">    listItem.setAttribute(<span class="hljs-string">'data-Index'</span>, index) <span class="hljs-comment">//這不是設定className，單純的 name 跟 value</span></span><br><span class="line"></span><br><span class="line">    listItem.innerHTML = <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">    &lt;span class='number'&gt;<span class="hljs-subst">${index + <span class="hljs-number">1</span>}</span>&lt;/span&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;div class='draggable' draggable='true'&gt;</span></span><br><span class="line"><span class="hljs-string">      &lt;p class='person-name'&gt;<span class="hljs-subst">${person}</span>&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">      &lt;i class='fas fa-grip-lines'&gt;&lt;/i&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">    `</span></span><br><span class="line">    listItems.push(listItem)</span><br><span class="line">    draggableList.appendChild(listItem)</span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  addEventListeners()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-資料隨機排列"><a href="#3-資料隨機排列" class="headerlink" title="3. 資料隨機排列"></a>3. 資料隨機排列</h3><p>有了資料後，每次刷新頁面資料要隨機排列。<br>要隨機排列就要有亂數，並且把亂數跟字串綁定，這樣每次刷新頁面順序就會是亂的。</p>
+<p>把陣列內的字串用 map 產生出新的陣列 :<br>將字串賦予到 value 裡面，再用 <code>Math.random()</code> 產生亂數，把這些亂數賦予到 sort 裡面，但是目前排列順序還是不對，必須依照我設定的順序跟數字綁定</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;[...attractions].map(<span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> ({ <span class="hljs-attr">value</span>: a, <span class="hljs-attr">sort</span>: <span class="hljs-built_in">Math</span>.random() }))</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/asWCFfa.png"></p>
+<ul>
+<li><code> sort()</code> : 把資料依照正確順序排列。<a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/LYbNwoE?editors=0011">Codepen</a></li>
+</ul>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 本來陣列內數字是亂的，經過 sort 會依照大小排列</span></span><br><span class="line"><span class="hljs-keyword">const</span> numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">9</span>, <span class="hljs-number">6</span>, <span class="hljs-number">20</span>, <span class="hljs-number">15</span>]</span><br><span class="line"><span class="hljs-built_in">console</span>.log(</span><br><span class="line">  numbers.sort(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a, b</span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> a - b</span><br><span class="line">  })</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// arrow function</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(numbers.sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a - b))</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/rRpF2i2.png"></p>
+<p>看過上面的解釋後，接下來要把陣列內的字串跟正確的數字順序做綁定。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;[...attractions].sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a.sort - b.sort)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/WRDnx5f.png"><br>比照上面那張圖，原本是亂掉的，現在依照陣列內的順序讓數字由小到大排列。</p>
+<p>有了順序後，數字不被看見，只要取 value 就好。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.map(<span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> a.value)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="4-拖曳效果"><a href="#4-拖曳效果" class="headerlink" title="4. 拖曳效果"></a>4. 拖曳效果</h3><p>下表參考自 : <a target="_blank" rel="noopener" href="https://hff2.github.io/2021/02/02/HTML5-Drag-and-Drop-API-%E7%AD%86%E8%A8%98/">HTML5 Drag and Drop API 筆記</a><br>| | Drag Source | Drag Target |解釋 |<br>| ——– | ——– | ——– |——– |<br>| 1 | dragstart| |<strong>開始</strong>拖曳元素時觸發此事件|<br>| 2 | drag | dragenter |拖曳元素時觸發此事件|<br>| 3 | | dragover |當元素拖曳到<strong>有效位置放置</strong>則觸發此事件|<br>| 4 | | dragleave |拖曳的元素<strong>離開</strong>有效的位置時觸發|<br>| 5 | | drop |在<strong>有效位置</strong>上<strong>放置</strong>元素時觸發此事件|<br>| 6 | dropend | |當拖曳<strong>結束</strong>時會觸發此事件|</p>
+<blockquote>
+<p>這段來自 : <a target="_blank" rel="noopener" href="https://pjchender.blogspot.com/2017/08/html5-drag-and-drop-api.html">製作可拖曳的元素（HTML5 Drag and Drop API）</a> &gt; <img src="https://i.imgur.com/BoqFTzM.png"></p>
+<ul>
+<li><strong>Drag Source</strong> 指的是被點擊要拖曳的物件，也就是藍色的圓，通常是一個 element。</li>
+<li><strong>Drop Target</strong> 指的是拖曳的物件被放置的區域，也就是右邊的綠色區域，通常是一個 div container。</li>
+<li><strong>drag</strong>：在 drag source 被拖曳時會持續被觸發。</li>
+<li><strong>dragover</strong>：當拖曳的 drag source 在 drop target 上方時會持續被觸發。</li>
+</ul>
+</blockquote>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addEventListeners</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> draggables = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'.draggable'</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> dragListItems = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'.draggable-list li'</span>)</span><br><span class="line">  <span class="hljs-comment">//選到 ul 底下所有 li ( 因為 li 沒有 calssName ，所以這樣寫)</span></span><br><span class="line"></span><br><span class="line">  draggables.forEach(<span class="hljs-function">(<span class="hljs-params">draggable</span>) =&gt;</span> {</span><br><span class="line">    draggable.addEventListener(<span class="hljs-string">'dragstart'</span>, dragStart)</span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  dragListItems.forEach(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> {</span><br><span class="line">    item.addEventListener(<span class="hljs-string">'dragover'</span>, dragOver)</span><br><span class="line">    item.addEventListener(<span class="hljs-string">'drop'</span>, dragDrag)</span><br><span class="line">    item.addEventListener(<span class="hljs-string">'dragenter'</span>, dragEnter)</span><br><span class="line">    item.addEventListener(<span class="hljs-string">'dragleave'</span>, dragLeave)</span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>拖曳時更換顏色</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dragEnter</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// console.log('Event: ', 'dragEnter')</span></span><br><span class="line">  <span class="hljs-built_in">this</span>.classList.add(<span class="hljs-string">'over'</span>)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dragLeave</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// console.log('Event: ', 'dragLeave')</span></span><br><span class="line">  <span class="hljs-built_in">this</span>.classList.remove(<span class="hljs-string">'over'</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>當我拖曳時 <code>dragstart</code> 就會開始抓取當前的索引值</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dragStart</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// console.log('Event: ', 'dragStart')</span></span><br><span class="line">  <span class="hljs-comment">//拖曳的時候抓取索引值</span></span><br><span class="line">  dragStartIndex = +<span class="hljs-built_in">this</span>.closest(<span class="hljs-string">'li'</span>).getAttribute(<span class="hljs-string">'data-Index'</span>)</span><br><span class="line">  <span class="hljs-comment">//上面設定索引值，這裡抓索引值，+ 號改型別用</span></span><br><span class="line">  <span class="hljs-comment">// console.log(dragStartIndex)</span></span><br><span class="line">  <span class="hljs-comment">// console.log(typeof dragStartIndex)</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果沒有 <code>+</code> 號，當我拖曳第一個，用 <code>console</code> 看會顯示下圖<br><img src="https://i.imgur.com/lQOGwH6.png"></p>
+<p>有 <code>+</code> 號<br><img src="https://i.imgur.com/ZTQX984.png"></p>
+<p>抓到索引值後把拖曳到該欄位的索引值對換。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dragDrag</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// console.log('Event: ', 'dragDrag')</span></span><br><span class="line">  <span class="hljs-keyword">const</span> dragEndIndex = +<span class="hljs-built_in">this</span>.getAttribute(<span class="hljs-string">'data-Index'</span>)</span><br><span class="line">  swapItems(dragStartIndex, dragEndIndex)</span><br><span class="line">  <span class="hljs-built_in">this</span>.classList.remove(<span class="hljs-string">'over'</span>)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">swapItems</span>(<span class="hljs-params">from, to</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> itemOne = listItems[<span class="hljs-keyword">from</span>].querySelector(<span class="hljs-string">'.draggable'</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> itemTwo = listItems[to].querySelector(<span class="hljs-string">'.draggable'</span>)</span><br><span class="line"></span><br><span class="line">  listItems[<span class="hljs-keyword">from</span>].appendChild(itemTwo)</span><br><span class="line">  listItems[to].appendChild(itemOne)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="5-確認清單順序是否正確"><a href="#5-確認清單順序是否正確" class="headerlink" title="5. 確認清單順序是否正確"></a>5. 確認清單順序是否正確</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkOrder</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  listItems.forEach(<span class="hljs-function">(<span class="hljs-params">listItem, index</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> personName = listItem.querySelector(<span class="hljs-string">'.draggable'</span>).innerText.trim()</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">if</span> (personName !== attractions[index]) {</span><br><span class="line">      listItem.classList.add(<span class="hljs-string">'wrong'</span>)</span><br><span class="line">    } <span class="hljs-keyword">else</span> {</span><br><span class="line">      listItem.classList.remove(<span class="hljs-string">'wrong'</span>)</span><br><span class="line">      listItem.classList.add(<span class="hljs-string">'right'</span>)</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">checkBtn.addEventListener(<span class="hljs-string">'click'</span>, checkOrder)</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/rest_spread.html">展開運算符與其餘運算符</a><br><a target="_blank" rel="noopener" href="https://hff2.github.io/2021/02/02/HTML5-Drag-and-Drop-API-%E7%AD%86%E8%A8%98/">HTML5 Drag and Drop API 筆記</a><br><a target="_blank" rel="noopener" href="https://pjchender.blogspot.com/2017/08/html5-drag-and-drop-api.html">製作可拖曳的元素（HTML5 Drag and Drop API）</a><br><a target="_blank" rel="noopener" href="https://www.udemy.com/course/web-projects-with-vanilla-javascript/learn/lecture/17842252#overview">20 Web Projects With Vanilla JavaScript</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E4%BD%9C%E5%93%81%E9%9B%86/">#作品集</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/dragDrop/">#dragDrop</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/JavaScript/">#JavaScript</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/02/22/%E5%9F%BA%E6%9C%AC%E6%A8%A1%E6%9D%BF%E8%AA%9E%E6%B3%95/">Vue - 基本語法( 一 )</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/02/05/countdown/">JavaScript 實作 - 明年倒數計時</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2021/02/08/dragdrop/';
+        this.page.identifier = '2021/02/08/dragdrop/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

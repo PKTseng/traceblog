@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Vue - 組件化 ( 一 ) - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="每記錄一次就會比昨天的自己更加厲害">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Vue - 組件化 ( 一 )
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2021-02-27T16:00:00.000Z" itemprop="datePublished">2021年2月28日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Vue/">Vue</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            17 分鐘 讀完 (約 2503 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>面對複雜問題的處裡的方式就是將問題分割，而將東西分割的方式在 Vue 裡面我們稱為組件化。</p>
+<p>大概 10 年前吧，原本一個網頁是由一個 HTML、CSS、JavaScript 所組成的，但這樣在改動某個地方的時候會非常麻煩也會擔心會不會影響到網頁其他地方。後來出現了用 JavaScript 寫成的前端框架，將網頁內部切分成很多區塊，讓這些區塊內都有獨立的 HTML、CSS、JavaScript，這樣當某個區塊改動時就不必擔心會影響到網頁內的其他區塊，也因為每個區塊都是獨立的所以重複利用，這也讓開發者大大的提升了開發效率。</p>
+<p><a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/components.html">下圖來自官網</a><br><img src="https://i.imgur.com/KxbAXYc.png"></p>
+<p>組件化的思想就是盡可能的把頁面拆分成很多個小區塊，變成可重複利用的組件。</p>
+<a id="more"></a>
+
+<h2 id="組件化開發"><a href="#組件化開發" class="headerlink" title="組件化開發"></a>組件化開發</h2><h3 id="1-組件化的基本使用"><a href="#1-組件化的基本使用" class="headerlink" title="1.組件化的基本使用"></a>1.組件化的基本使用</h3><p>在之前<a href="https://pktseng.github.io/2021/02/22/%E5%9F%BA%E6%9C%AC%E6%A8%A1%E6%9D%BF%E8%AA%9E%E6%B3%95/#%E4%B8%80%E3%80%81%E6%8F%92%E5%80%BC%E8%AA%9E%E6%B3%95">基本模板語法</a>提到用 mustache 語法可以顯示 <code>data</code> 物件內的 <code>value 值</code>，但如果有非常多重複的內容，這樣做不只可讀性差，也不好維護。用以下程式碼來示範。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{message1}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{{message2}}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{message1}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{{message2}}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{message1}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{{message2}}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{message1}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{{message2}}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    message1: <span class="hljs-string">'title'</span>,</span><br><span class="line">    message2: <span class="hljs-string">'hello world'</span>,</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>顯示下圖<br><img src="https://i.imgur.com/Ut7qry9.png"></p>
+<p>這樣寫確實會顯示 4 個內容，但一樣的內容要寫 4 次才會呈現，而且有很冗長，這時就可以用組件的方式撰寫，可讀性也比較高。</p>
+<p>以下示範如何組件化。</p>
+<p><strong>分成三大步驟:</strong></p>
+<ol>
+<li>創造組件構造器 : <code>Vue.extend()</code></li>
+<li>註冊組件 : <code>Vue.component()</code></li>
+<li>使用組件 : <code>Vue 實例的使用範圍</code></li>
+</ol>
+<p>首先把重複性高的拉出來，如下圖，紅框處的重複性特別高，所以要獨立出來變成組件。<br><img src="https://i.imgur.com/HH2YDec.png"></p>
+<h4 id="1-創造組件"><a href="#1-創造組件" class="headerlink" title="1. 創造組件"></a>1. 創造組件</h4><p>在 <code>Vue.extend</code> 組件裡面，它有個屬性是 <code>template</code> ，就是模板，在模板裡面的所有內容都是獨立且可重複利用的，把上圖紅框處放到模板裡面。再把 <code>Vue.extend()</code> 賦予到 <code>vm</code> 變數裡面，用變數是為了方便待會在註冊 ( component ) 的時候呼叫。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 1. 創造組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> vm = Vue.extend({</span><br><span class="line">  template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">  &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;h2&gt;我是模板的:title&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;我是模板的:hello world&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span>,</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-註冊組件"><a href="#2-註冊組件" class="headerlink" title="2. 註冊組件"></a>2. 註冊組件</h4><p>創造完要註冊，它需要兩個參數，第一個參數是 <code>模板的標籤名稱</code> 可以自訂義，第二個是 <code>創造組件的變數</code> 就是指上面的 <code>vm</code> ，寫法也非常簡單，如下</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 2.註冊組件</span></span><br><span class="line">Vue.component(<span class="hljs-string">'模板的標籤名稱'</span>, 創造組件的變數)</span><br><span class="line">Vue.component(<span class="hljs-string">'my-cpn'</span>, vm)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>完整寫法:</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{message1}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{{message2}}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">&lt;!--   &lt;h2&gt;{{message1}}&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-comment">  &lt;p&gt;{{message2}}&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-comment"></span></span><br><span class="line"><span class="hljs-comment">  &lt;h2&gt;{{message1}}&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-comment">  &lt;p&gt;{{message2}}&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-comment"></span></span><br><span class="line"><span class="hljs-comment">  &lt;h2&gt;{{message1}}&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-comment">  &lt;p&gt;{{message2}}&lt;/p&gt; --&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 1. 創造組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> vm = Vue.extend({</span><br><span class="line">  template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">  &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;h2&gt;我是模板的:title&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;我是模板的:hello world&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span>,</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 2.註冊組件</span></span><br><span class="line">Vue.component(<span class="hljs-string">'my-cpn'</span>, vm)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 3.使用組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    message1: <span class="hljs-string">'title'</span>,</span><br><span class="line">    message2: <span class="hljs-string">'hello world'</span>,</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>顯示下圖<br><img src="https://i.imgur.com/ZPBsCjR.png"></p>
+<p>會發現在 <code>html</code> 上只要寫 <code>my-cpn</code> 標籤就可以顯示相同的內容，這就是組件化，之後如果想改動 <code>html</code> 的內容只要針對組件內的內容做改動就好，這樣不只增加可讀性同時也方便管理。</p>
+<p>但要特別注意的是模板標籤必須寫在 <code>id='app'</code> 標籤裡面，寫在外面是不會被使用到的。</p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/OJbQYwp?editors=1011">DEMO</a></p>
+<blockquote>
+<p><code>Vue.extend()</code> 在 Vue2.X 版以後就沒看到了，會示範也是因為這是必要的基礎觀念，之後的開發上就不會使用 <code>Vue.extend()</code> 而是使用語法糖的方式撰寫。</p>
+</blockquote>
+<h3 id="2-全域組件跟區域組件"><a href="#2-全域組件跟區域組件" class="headerlink" title="2. 全域組件跟區域組件"></a>2. 全域組件跟區域組件</h3><p>以上所寫的都是全域組件，全域就是可以在多個 Vue 實例裡面使用。<br>之前所寫的 Vue 實例只有一個，那可不可有兩個?<br>答案是 : 可以的! 但真實開發只會有一個，以下是為了釐清觀念所示範的。</p>
+<p>再新增一個 Vue 實例 ( <code>id='app2'</code> )</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app2"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 1. 創造組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> vm = Vue.extend({</span><br><span class="line">  template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">  &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;h2&gt;我是模板的:title&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;我是模板的:hello world&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span>,</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 2.註冊組件</span></span><br><span class="line">Vue.component(<span class="hljs-string">'my-cpn'</span>, vm)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 3.使用組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 新增一個實例 app2</span></span><br><span class="line"><span class="hljs-keyword">const</span> app2 = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app2'</span>,</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>一樣可以使用，如下圖<br><img src="https://i.imgur.com/K2bd97U.png"></p>
+<p>用開發模式看，會看到 <code>app2</code> 也有用到全域組件<br><img src="https://i.imgur.com/9XXcTf0.png"></p>
+<p>那要怎麼做才會變成區域組件?<br>方法很簡單，就是把 <code>Vue.component('my-cpn', vm)</code> 移到 Vue 實例裡面 ( 記得 component 要加 s )。<br>Vue 實例裡面新增 <code>components</code> 一個屬性，再給 <code>components</code> 屬性一個物件，裡面放 <code>key</code> 跟 <code>value</code> 值。</p>
+<p>key 值指的是<code>自訂義模板的標籤名</code>， value 就是<code>組件的變數名稱</code>。</p>
+<p>要特別注意的是 key 值的寫法，跟 HTML 模板標籤的寫法。<br>key 值的寫法分兩種:</p>
+<ol>
+<li>單字以減號-分離 ( Kebab Case ) <font color="#FF0000">必須加引號</font>。</li>
+<li>駝峰式命名法 ( Camel Case )，<font color="#FF0000">加不加引號都可以</font>。</li>
+</ol>
+<p><font color="#FF0000">HTML 模板的組件標籤必須是 Kebab Case 寫法</font>。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el:<span class="hljs-string">'#app'</span>,</span><br><span class="line">  components:{</span><br><span class="line">    <span class="hljs-comment">// Kebab Case</span></span><br><span class="line">    <span class="hljs-string">'my-cpn'</span>: vm</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// Camel Case</span></span><br><span class="line">    myCpn: vm</span><br><span class="line">    <span class="hljs-string">'myCpn'</span>: vm</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>以下示範區域組件</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app2"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 1. 創造組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> vm = Vue.extend({</span><br><span class="line">  template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">  &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;h2&gt;我是模板的:title&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;我是模板的:hello world&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span>,</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 2.註冊組件</span></span><br><span class="line"><span class="hljs-comment">// Vue.component('my-cpn', vm)</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 3.使用組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  components: {</span><br><span class="line">    <span class="hljs-comment">// 'my-cpn': vm</span></span><br><span class="line">    <span class="hljs-comment">// 'myCpn': vm</span></span><br><span class="line">    myCpn: vm,</span><br><span class="line">  },</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> app2 = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app2'</span>,</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>用開發者工具看，<code>app</code> 有在實例裡面註冊，所以可以使用，但 <code>app2</code> 不能，因為沒有在 <code>app2</code> 裡面註冊，所以不會解析 <code>my-cpn</code> 標籤。<br><img src="https://i.imgur.com/Gf58VOC.png"></p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/mdOxOMJ?editors=1011">DEMO</a></p>
+<p>以上就是區域組件的示範，在實戰開發上也是區域組件使用的最多，也只會有一個 Vue 實例。</p>
+<h3 id="3-父子組件"><a href="#3-父子組件" class="headerlink" title="3. 父子組件"></a>3. 父子組件</h3><p>顧名思義就是組件裡面再放一層組件。</p>
+<p>以下範例是創造一個 <code>vm2</code> 組件，再把 <code>vm1</code> 放到 <code>vm2</code> 裡面註冊，再到 Vue 實例裡面註冊 <code>vm2</code>。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn2</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 1. 創造組件 vm1</span></span><br><span class="line"><span class="hljs-keyword">const</span> vm1 = Vue.extend({</span><br><span class="line">  template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">  &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;h2&gt;One&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;One&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span>,</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 創造組件 vm2</span></span><br><span class="line"><span class="hljs-keyword">const</span> vm2 = Vue.extend({</span><br><span class="line">  template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">  &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;h2&gt;Two&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;Two Content&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;my-cpn1&gt;&lt;/my-cpn1&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span>,</span><br><span class="line">  <span class="hljs-comment">// 註冊組件 vm1</span></span><br><span class="line">  components: {</span><br><span class="line">    <span class="hljs-string">'my-cpn1'</span>: vm1,</span><br><span class="line">  },</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 3.使用組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  <span class="hljs-comment">// 2.註冊組件</span></span><br><span class="line">  components: {</span><br><span class="line">    <span class="hljs-string">'my-cpn2'</span>: vm2,</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>結果為下圖<br><img src="https://i.imgur.com/88UmUB0.png"></p>
+<p>用開發者工具查看<br><img src="https://i.imgur.com/cd4p83b.png"></p>
+<p>由上面案例可知 <code>vm2</code> 為父組件，<code>vm1</code> 為子組件。</p>
+<p>當 HTML 再解析 <code>my-cpn2</code> 標籤的內容時，他會到 <code>vm2</code> 裡面解析模板的內容，而解析 <code>vm2</code> 模板的內容時又發現 <code>my-cpn1</code> 標籤，這時他會看看有沒有註冊 <code>my-cpn1</code> 的標籤，如果有找到它就會對應到 <code>vm1</code> 模板的內的內容，如果 <code>vm1</code> 裡面沒找到的話，它就會去全域組件找，如果全域還找不到就會報錯。</p>
+<p>編譯好之後的模板如下</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 創造組件 vm2</span></span><br><span class="line"><span class="hljs-keyword">const</span> vm2 = Vue.extend({</span><br><span class="line">  template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">  &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;h2&gt;Two&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;Two Content&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string"></span></span><br><span class="line"><span class="hljs-string">    &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">      &lt;h2&gt;One&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">      &lt;p&gt;One&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">     &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span>,</span><br><span class="line">  components: {</span><br><span class="line">    <span class="hljs-string">'my-cpn1'</span>: vm1,</span><br><span class="line">  },</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 3.使用組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  <span class="hljs-comment">// 2.註冊組件</span></span><br><span class="line">  components: {</span><br><span class="line">    <span class="hljs-string">'my-cpn2'</span>: vm2,</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>換個角度來說 Vue 實例也是一個父組件，只差沒寫 <code>template</code> 屬性。</p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/bGBvWOr?editors=1011">DEMO</a></p>
+<h3 id="4-註冊組件的語法糖"><a href="#4-註冊組件的語法糖" class="headerlink" title="4. 註冊組件的語法糖"></a>4. 註冊組件的語法糖</h3><blockquote>
+<p>以上當我們再創造組件的時候所使用的 <code>Vue.extend()</code> 在 Vue 2.X 以後已經很少用了幾乎是不會再出現。</p>
+</blockquote>
+<p>一開始先用 <code>extend</code> 創造，再用 <code>component</code> 註冊。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn1</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 1. 創造組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> vm1 = Vue.extend({</span><br><span class="line">  template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">  &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;h2&gt;One&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;One&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span>,</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 2.註冊組件</span></span><br><span class="line">Vue.component(<span class="hljs-string">'my-cpn1'</span>, vm1)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 3.使用組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>但我們可以把上面 <code>Vue.extend</code> 裡面的內容移到 <code>Vue.component</code> 裡面，如下</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 把 vm1 改成 extend 創造的物件</span></span><br><span class="line">Vue.component(<span class="hljs-string">'my-cpn1'</span>, {</span><br><span class="line">  template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">  &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;h2&gt;One&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;One&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span>,</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>同理，可以在把 <code>Vue.component</code> 的內容移到 Vue 實例裡面，但 <code>component</code> 要記得加 <code>s</code> ，所以又可以再改寫一次，如下</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 3.使用組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  components: {</span><br><span class="line">    <span class="hljs-string">'my-cpn1'</span>: {</span><br><span class="line">      template: <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">      &lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">        &lt;h2&gt;One&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">        &lt;p&gt;One&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">      &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">      `</span>,</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/rPU0m4Q.png"></p>
+<p>這就是組件化的語法糖的最終版。</p>
+<p>要特別注意的是除了<font color="#FF0000"> <code>component</code> 要加 <code>s</code> ， 逗號也要改成冒號。</font></p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/oNYqwYx?editors=1011">DEMO</a></p>
+<h3 id="5-組件模板的分離寫法"><a href="#5-組件模板的分離寫法" class="headerlink" title="5. 組件模板的分離寫法"></a>5. 組件模板的分離寫法</h3><p>在上一點註冊組件的語法糖中，最終寫法是將模板的資料寫到 Vue 實例裡面，但模板其實是可以寫到 HTML 裡面的，以下要講解的是比較簡單的分離寫法。</p>
+<h4 id="script-標籤，屬性為-type-39-text-x-template-39"><a href="#script-標籤，屬性為-type-39-text-x-template-39" class="headerlink" title="script 標籤，屬性為 type='text/x-template'"></a>script 標籤，屬性為 <code>type='text/x-template'</code></h4><p>在 HTML 裡面創造 <code>script</code> 標籤，加上 <code>type='text/x-template'</code> 跟 一個 <code>id</code> ，id 是為了在註冊裡面綁定用的，寫法如下。</p>
+<p>但要特別注意的是，在 <font color="#FF0000">模板裡面要記得加上 <code>div</code> 標籤。</font></p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn1</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">&lt;!-- 在這裡創造一個模板 --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/x-template"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"vm1"</span>&gt;</span></span><br><span class="line"><span class="hljs-handlebars"><span class="hljs-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span></span><br><span class="line"><span class="hljs-handlebars"><span class="hljs-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>title<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span></span><br><span class="line"><span class="hljs-handlebars"><span class="hljs-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>content<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span></span></span><br><span class="line"><span class="hljs-handlebars"><span class="hljs-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 註冊 vm1 組件</span></span><br><span class="line">Vue.component(<span class="hljs-string">'my-cpn1'</span>, {</span><br><span class="line">  template: <span class="hljs-string">'#vm1'</span>,</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 使用組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>顯示下圖<br><img src="https://i.imgur.com/LK9DGQH.png"></p>
+<h4 id="template-標籤"><a href="#template-標籤" class="headerlink" title="template 標籤"></a>template 標籤</h4><p><code>template</code> 寫法會更好記，因為只需要寫 <code>template</code> 加上 <code>id</code> 就好。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">my-cpn1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-cpn1</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">&lt;!-- template 寫法 --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"vm1"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>title<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>content<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>Vue 實例跟上面一樣。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 註冊組件</span></span><br><span class="line">Vue.component(<span class="hljs-string">'my-cpn1'</span>, {</span><br><span class="line">  template: <span class="hljs-string">'#vm1'</span>,</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 使用組件</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>顯示效果跟上面一樣。<br><img src="https://i.imgur.com/VORlZ7y.png"></p>
+<p>以上就是模板的分離寫法。</p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/yLVKXRd?editors=1011">DEMO</a></p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV15741177Eh?p=57">2019 年最全最新 Vue、Vuejs 教程，从入门到精通</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Vue/">#Vue</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/components/">#components</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/03/02/props/">Vue - 父組件傳遞到子組件的  props 語法</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/02/28/Vue-data/">Vue - data 必須是函數</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2021/02/28/Vue%20%E7%B5%84%E4%BB%B6%E4%B8%80/';
+        this.page.identifier = '2021/02/28/Vue 組件一/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

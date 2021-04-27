@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Git - 如何發 PR 完成協作 ( Pull Request ) - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="每記錄一次就會比昨天的自己更加厲害">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Git - 如何發 PR 完成協作 ( Pull Request )
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-12-27T16:00:00.000Z" itemprop="datePublished">2020年12月28日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Pull-Request/">Pull Request</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            8 分鐘 讀完 (約 1199 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><ol>
+<li><code>git clone</code>、<code>git pull</code> 這兩個指令有什麼不同，又分別代表什麼意思。</li>
+<li><code>Pull Request</code> 的流程是甚麼</li>
+<li>為什麼需要透過 <code>Pull Request</code> 來開發<a id="more"></a>
+
+</li>
+</ol>
+<hr>
+<h2 id="git-clone、git-pull-這兩個指令有什麼不同，又分別代表什麼意思。"><a href="#git-clone、git-pull-這兩個指令有什麼不同，又分別代表什麼意思。" class="headerlink" title="git clone、git pull 這兩個指令有什麼不同，又分別代表什麼意思。"></a><code>git clone</code>、<code>git pull</code> 這兩個指令有什麼不同，又分別代表什麼意思。</h2><p>兩個都是更新檔案，repository 更新的過程會不一樣，一個是整包下載，一個是下載本地端已經有只需要下載部分更新的檔案，兩個同樣都是把檔案更新到最新的狀態</p>
+<ul>
+<li><p><code>git clone</code> :在本地( local )端還沒有 repository 的狀況下，我們就會需要使用到 <code>clone</code> ，把整包 repository 載下來，一般也只需要 clone 一次，之後就只需要 pull 了。</p>
+</li>
+<li><p><code>git pull</code> :就是我們本地( local )端已經有 repository 了，這時候就不需要在 <code>clone</code> ，只需要透過 <code>pull</code> 的方式，將遠端 ( remote )的 repository 載下來就可以了</p>
+</li>
+</ul>
+<p>以上就是 clone、pull 的差別</p>
+<h2 id="為什麼需要透過-Pull-Request-來開發"><a href="#為什麼需要透過-Pull-Request-來開發" class="headerlink" title="為什麼需要透過 Pull Request 來開發"></a>為什麼需要透過 <code>Pull Request</code> 來開發</h2><p>一般在開發或是看到很有興趣的開源專案，如果想加入新功能或是加入開發專安的話就會需要使用到 <code>Pull Request</code>，也就是我們俗稱的 <code>PR</code></p>
+<h2 id="Pull-Request-的流程是甚麼"><a href="#Pull-Request-的流程是甚麼" class="headerlink" title="Pull Request 的流程是甚麼"></a><code>Pull Request</code> 的流程是甚麼</h2><p><strong>Pull Request 簡稱 PR</strong><br>如果已經是這個團隊的開者之一，那就單純 clone 就好，<br>如果是別的開源專案又不是這個專案的原始開發者之一，那就需要先將專案 fork 出來，再開始開發</p>
+<p>以饅頭計畫的專案為例，我們已經是這個專案的開發人員之一，所以只需要 clone 下來就好，然後開分之並在分支上進行開發，做完之後我們會需要 push 到 remote repository，這時候就要發 PR 了，讓資深工程師確認我們寫的需求有沒有問題，如果沒問題就會 merge 到主支上</p>
+<h3 id="以下示範"><a href="#以下示範" class="headerlink" title="以下示範:"></a>以下示範:</h3><p>因為之前已經 clone 過了，<font color="#FF0000"><strong>請記得先切換到主之上</strong></font>，然後再把本地端的檔案 pull 到最新的狀態，然後再用 <code>git checkout -b 分支名稱</code>，創建該分支同時切換到該分支上，如下圖<br><img src="https://i.imgur.com/SIEMhnl.jpg"></p>
+<p>接下來就是 Git 基本操作了<br>在分支上新增好內容後，把新增或是更改資料加入索引<br><img src="https://i.imgur.com/YCKG1RJ.jpg"></p>
+<p>然後提交(commit)上去<br>出現<code>git push --set-upstream origin example-mission</code>的原因可以參考<a target="_blank" rel="noopener" href="https://blog.csdn.net/benben_2015/article/details/78803753">這篇文章</a><br>解決方法就是複製貼上…<br><img src="https://i.imgur.com/X7JS8Fu.png"></p>
+<p>上面太模糊..補上清晰版…<br><img src="https://i.imgur.com/Fn1eXXI.png"></p>
+<p>push 上去後到 Github 專案點選左上 Pull Request，<br>因為目前還沒有發 PR，所以沒看到我剛新增的內容。<br>要發 PR 的話要點選右邊那兩個紅框的，<br><img src="https://i.imgur.com/KcQ30Je.png"></p>
+<p>一種是 <strong>Compare &amp; pull request</strong> ，另一種是<strong>New pull request</strong>，兩個都可以發，過程不一樣而已，以下兩種都會示範</p>
+<h3 id="New-pull-request"><a href="#New-pull-request" class="headerlink" title="New pull request"></a>New pull request</h3><p>點擊 <strong>New pull request</strong> 會顯示下圖畫面，<br><font color="#FF0000">左邊 <code>base:main</code> 是主支千萬不要動到</font>，動右邊要 merge 的分支就好<br>因為我們要把剛才新增的內容合併到主之上，所以選擇剛才新增的分支名稱 <code>example-mission</code><br><img src="https://i.imgur.com/2lQZlxZ.png"></p>
+<p>選完就會顯示剛才新增的內容，如下圖，確認 OK 後點選右邊的 <code>Create pull request</code><br><img src="https://i.imgur.com/vkAsffP.png"></p>
+<p>接著會進入以下畫面，這邊就要寫一下大標題，還有較細項的更改內容，<br>填寫完後再按右下的 <code>Create pull request</code><br><img src="https://i.imgur.com/dJDi880.png"></p>
+<p>按下後會進入以下畫面<br><img src="https://i.imgur.com/MEOjzcS.png"></p>
+<p>再回到 Pull Request 刷新一下，就會看到剛才新發的 PR 了<br><img src="https://i.imgur.com/yA8Saeh.png"></p>
+<p>接下來就等資深工程師確認我們寫的內容有無問題，<br>沒問題就會按下 <code>Merge pull request</code>，合併到主支(main)上</p>
+<h3 id="Compare-amp-pull-request"><a href="#Compare-amp-pull-request" class="headerlink" title="Compare &amp; pull request"></a>Compare &amp; pull request</h3><p>這邊更簡單，也推薦使用這個<br>因為點選 Compare &amp; pull request 後系統會自動選取剛才新建的分支上，會顯示下圖<br><img src="https://i.imgur.com/dJDi880.png"></p>
+<p>接著叫輸入大標題跟內容再 <code>Create pull request</code> ，這樣 PR 就發完了</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://gitbook.tw/chapters/github/pull-request.html">與其它開發者的互動 - 使用 Pull Request（PR） - 為你自己學 Git | 高見龍</a><br><a target="_blank" rel="noopener" href="https://w3c.hexschool.com/git/b9be5b1e">git add、git commit - 提交版本</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/benben_2015/article/details/78803753">Git master branch has no upstream branch 的解決</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Pull-Request/">#Pull Request</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/git-clone/">#git clone</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/git-pull/">#git pull</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2020/12/31/formVaild/">JavaScript 實作 - 簡易表單驗證</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2020/12/20/git/">Git - 基本操作</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2020/12/28/pullRequest/';
+        this.page.identifier = '2020/12/28/pullRequest/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

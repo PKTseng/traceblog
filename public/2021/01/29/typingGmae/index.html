@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript 實作 - 打字遊戲 - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="每記錄一次就會比昨天的自己更加厲害">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript 實作 - 打字遊戲
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2021-01-28T16:00:00.000Z" itemprop="datePublished">2021年1月29日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><span>></span><a class="article-category-link" href="/categories/JavaScript/%E4%BD%9C%E5%93%81%E9%9B%86/">作品集</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            12 分鐘 讀完 (約 1834 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h2 id="功能敘述："><a href="#功能敘述：" class="headerlink" title="功能敘述："></a>功能敘述：</h2><ol>
+<li>在時間內輸入顯示的單字可以得分。</li>
+<li>依照難度調整獎勵時間。</li>
+<li>時間內未輸入完成會顯示新訊息。</li>
+</ol>
+<p><img src="https://i.imgur.com/uVuOz1v.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PKTseng/Web-Side-Project/tree/gh-pages/mission27">Github</a><br><a href="https://pktseng.github.io/Web-Side-Project/mission27/index.html">Demo</a></p>
+<a id="more"></a>
+
+<h2 id="功能需求"><a href="#功能需求" class="headerlink" title="功能需求"></a>功能需求</h2><ol>
+<li>進入頁面後隨機產生文字。</li>
+<li>可以直接在輸入框輸入單字(不需要滑鼠點擊輸入框)，輸入正確得一分。</li>
+<li>進入頁面後時間開始倒數，若輸入正確倒數時間會增加。</li>
+<li>時間內沒寫完會顯示時間到的訊息。</li>
+<li>增加的時間可以依照難度調整獎勵時間。</li>
+<li>難度選單可以選擇隱藏或是顯示。</li>
+<li>刷新頁面後難度不會被回復預設值。</li>
+</ol>
+<h2 id="模板架構"><a href="#模板架構" class="headerlink" title="模板架構"></a>模板架構</h2><ol>
+<li>button 顯是隱藏難度。</li>
+<li>難度選單。</li>
+<li>顯示隨機產生的文字。</li>
+<li>輸入框。</li>
+<li>顯示時間跟分數。</li>
+</ol>
+<h4 id="1-顯示隱藏難度"><a href="#1-顯示隱藏難度" class="headerlink" title="1. 顯示隱藏難度"></a>1. 顯示隱藏難度</h4><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"settings-btn"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"settings-btn"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fas fa-cog"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-難度選單"><a href="#2-難度選單" class="headerlink" title="2. 難度選單"></a>2. 難度選單</h4><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"settings"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"settings"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"settings-form"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"difficulty"</span>&gt;</span>Difficulty<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"difficulty"</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"easy"</span>&gt;</span>Easy<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"medium"</span>&gt;</span>Medium<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"hard"</span>&gt;</span>Hard<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="3-顯示隨機產生的文字、輸入框、顯示時間跟分數"><a href="#3-顯示隨機產生的文字、輸入框、顯示時間跟分數" class="headerlink" title="3. 顯示隨機產生的文字、輸入框、顯示時間跟分數"></a>3. 顯示隨機產生的文字、輸入框、顯示時間跟分數</h4><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>👩‍💻 Speed Typer 👨‍💻<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">small</span>&gt;</span>Type the following:<span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"word"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">id</span>=<span class="hljs-string">"text"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">autocomplete</span>=<span class="hljs-string">"off"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Type the word here..."</span></span></span><br><span class="line"><span class="hljs-tag">  /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"time-container"</span>&gt;</span>Time left: <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"time"</span>&gt;</span>10s<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"score-container"</span>&gt;</span>Score: <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"score"</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"end-game-container"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"end-game-container"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>架構完成圖<br><img src="https://i.imgur.com/hkQyRRM.png"></p>
+<p>CSS 樣式可以依照個人喜好來設定。</p>
+<h2 id="功能撰寫-JavaScript"><a href="#功能撰寫-JavaScript" class="headerlink" title="功能撰寫 ( JavaScript )"></a>功能撰寫 ( JavaScript )</h2><h3 id="1-將-DOM-跟元素做綁定"><a href="#1-將-DOM-跟元素做綁定" class="headerlink" title="1. 將 DOM 跟元素做綁定"></a>1. 將 DOM 跟元素做綁定</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> word = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'word'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> text = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'text'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> scoreEl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'score'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> timeEl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'time'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> endgameEl = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'end-game-container'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> settingsBtn = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'settings-btn'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> settings = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'settings'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> settingsForm = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'settings-form'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> difficultySelect = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'difficulty'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-進入頁面後隨機產生文字。"><a href="#2-進入頁面後隨機產生文字。" class="headerlink" title="2. 進入頁面後隨機產生文字。"></a>2. 進入頁面後隨機產生文字。</h3><p>文字資料可以透過 API 獲取。<br>或是像作者直接給陣列值再用 <code>Math.random</code>、<code>Math.floor</code>、<code>words.length</code>的方式隨機抓取一個值。</p>
+<p>打 API 要資料的方法有三種 Ajax、axios、fetch，以下用 axios 示範，選用 axios 是因為比較簡單，直接給 API <a target="_blank" rel="noopener" href="https://random-word-api.herokuapp.com/home">url</a> ，再用 <code>then</code> 抓取回傳的資料就可以了，如果資料回傳錯誤就會走 <code>catch</code> 。<br>用 <code>console</code> 查看 <code>response</code> 的資料如下圖<br><img src="https://i.imgur.com/4paTkbD.png"></p>
+<p>有了這值後再把值賦予到 <code>randomWord</code> 變數上，讓其他函示可以取用。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 用 Axios 打 API 抓取 response 的值</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRandomWord</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  axios</span><br><span class="line">    .get(<span class="hljs-string">'https://random-word-api.herokuapp.com/word?number=1'</span>)</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-comment">// console.log(res);</span></span><br><span class="line">      randomWord = res.data[<span class="hljs-number">0</span>]</span><br><span class="line">      <span class="hljs-comment">// console.log(randomWord);</span></span><br><span class="line">      word.innerHTML = randomWord</span><br><span class="line">    })</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'沒抓到單字資料'</span>)</span><br><span class="line">    })</span><br><span class="line">}</span><br><span class="line">getRandomWord()</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-比對輸入的值是否吻合再給予獎勵"><a href="#3-比對輸入的值是否吻合再給予獎勵" class="headerlink" title="3. 比對輸入的值是否吻合再給予獎勵"></a>3. 比對輸入的值是否吻合再給予獎勵</h3><p><code>focus()</code> : 打開視窗就可以直接輸入單字了。</p>
+<p>把 <code>e.target.value</code> 抓到的值賦予到 <code>inputText</code> 變數上，方便跟上面拆分的 <code>randomWord</code> 做比對，要注意 <code>randomWord</code> 不能用 <code>cosnt</code> 、<code>let</code>、<code>var</code> 宣告，不然會抓不到，比對成功後，分數會加 1，同時給予獎勵增長時間 5 秒。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">text.focus()</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 答對加分，同時把分數綁到 DOM 上</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateScore</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  score++</span><br><span class="line">  scoreEl.innerHTML = score</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 在輸入框輸入文字同時跟顯示的文字做對比</span></span><br><span class="line">text.addEventListener(<span class="hljs-string">'input'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">let</span> inputText = e.target.value</span><br><span class="line">  <span class="hljs-keyword">if</span> (inputText === randomWord) {</span><br><span class="line">    getRandomWord()</span><br><span class="line">    updateScore()</span><br><span class="line">    e.target.value = <span class="hljs-string">''</span> <span class="hljs-comment">//只能用 e.target.value 來清空值</span></span><br><span class="line"></span><br><span class="line">    time += <span class="hljs-number">5</span></span><br><span class="line"></span><br><span class="line">    updateTime()</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="4-時間內沒寫完會顯示時間到的訊息。"><a href="#4-時間內沒寫完會顯示時間到的訊息。" class="headerlink" title="4. 時間內沒寫完會顯示時間到的訊息。"></a>4. 時間內沒寫完會顯示時間到的訊息。</h3><p>輸入文字的同時時間也會開始倒數，倒數的數字要設置停損點 ( clearInterval )，不然會數到負的。</p>
+<ul>
+<li><code>setInterval</code> : 是設定固定時間重複循環的語法。</li>
+</ul>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> initTime = <span class="hljs-built_in">setInterval</span>(updateTime, <span class="hljs-number">1000</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateTime</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 時間開始倒扣</span></span><br><span class="line">  time--</span><br><span class="line">  <span class="hljs-comment">// 倒扣的時間顯示在 DOM 上</span></span><br><span class="line">  timeEl.innerHTML = time + <span class="hljs-string">' s '</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (time === <span class="hljs-number">0</span>) {</span><br><span class="line">    <span class="hljs-built_in">clearInterval</span>(initTime) <span class="hljs-comment">//少了這個停損點倒數的數字會變成負的</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 時間到的訊息用字串模板的方式載入</span></span><br><span class="line">    endgameEl.innerHTML = <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">    &lt;h1&gt;Time ran out&lt;/h1&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;Your final score is <span class="hljs-subst">${score}</span>&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;button onclick="location.reload()"&gt;Reload&lt;/button&gt;</span></span><br><span class="line"><span class="hljs-string">    `</span></span><br><span class="line">    endgameEl.style.display = <span class="hljs-string">'flex'</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="5-難度選單可以選擇隱藏或是顯示。"><a href="#5-難度選單可以選擇隱藏或是顯示。" class="headerlink" title="5. 難度選單可以選擇隱藏或是顯示。"></a>5. 難度選單可以選擇隱藏或是顯示。</h3><p>用 <code>toggle</code> 搭配 css style 就可以了。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">settingsBtn.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  settings.classList.toggle(<span class="hljs-string">'hide'</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="6-刷新頁面後難度不會被回復預設值。"><a href="#6-刷新頁面後難度不會被回復預設值。" class="headerlink" title="6. 刷新頁面後難度不會被回復預設值。"></a>6. 刷新頁面後難度不會被回復預設值。</h3><p>要刷新頁面選單的值不會恢復成預設值就會使用到 <code>localStorage</code> ，把選擇的難度寫入到瀏覽器裡面。</p>
+<ol>
+<li>選擇難度是一個<code>event</code>，把選到的難度用 <code>setItem</code> 寫到瀏覽器記憶體 <code>localStorage</code> 裡面</li>
+<li>再用 <code>difficulty</code> 抓取選到的難度同時判斷輸入單字的時間要多還是要少</li>
+<li>到目前為止頁面刷新後難度還是會恢復成預設值，所以要把選單的值寫到 value 裡面</li>
+</ol>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 1. 選擇難度，把資料寫進瀏覽器記憶體裡面</span></span><br><span class="line">settingsForm.addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">  difficulty = e.target.value</span><br><span class="line">  <span class="hljs-built_in">localStorage</span>.setItem(<span class="hljs-string">'difficulty'</span>, difficulty)</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 2. 把選到的值賦予到 difficulty 變數裡面，用來判斷難增加的時間</span></span><br><span class="line"><span class="hljs-keyword">let</span> difficulty =</span><br><span class="line">  <span class="hljs-built_in">localStorage</span>.getItem(<span class="hljs-string">'difficulty'</span>) !== <span class="hljs-literal">null</span></span><br><span class="line">    ? <span class="hljs-built_in">localStorage</span>.getItem(<span class="hljs-string">'difficulty'</span>)</span><br><span class="line">    : <span class="hljs-string">'medium'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 3. 這是選完後抓取選單的值，確保頁面刷新後不會恢復成預設值</span></span><br><span class="line">difficultySelect.value =</span><br><span class="line">  <span class="hljs-built_in">localStorage</span>.getItem(<span class="hljs-string">'difficulty'</span>) !== <span class="hljs-literal">null</span></span><br><span class="line">    ? <span class="hljs-built_in">localStorage</span>.getItem(<span class="hljs-string">'difficulty'</span>)</span><br><span class="line">    : <span class="hljs-string">'medium'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="7-增加的時間可以依照難度調整獎勵時間。"><a href="#7-增加的時間可以依照難度調整獎勵時間。" class="headerlink" title="7. 增加的時間可以依照難度調整獎勵時間。"></a>7. 增加的時間可以依照難度調整獎勵時間。</h3><p>如果難度越高，獎勵時間就越少，反之同理。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 依照難度調整增加輸入時間</span></span><br><span class="line"><span class="hljs-keyword">if</span> (difficulty === <span class="hljs-string">'hard'</span>) {</span><br><span class="line">  time += <span class="hljs-number">2</span></span><br><span class="line">} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (difficulty === <span class="hljs-string">'medium'</span>) {</span><br><span class="line">  time += <span class="hljs-number">3</span></span><br><span class="line">} <span class="hljs-keyword">else</span> {</span><br><span class="line">  time += <span class="hljs-number">5</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="功能撰寫-jQuery"><a href="#功能撰寫-jQuery" class="headerlink" title="功能撰寫 ( jQuery )"></a>功能撰寫 ( jQuery )</h2><h3 id="1-進入頁面後隨機產生文字。"><a href="#1-進入頁面後隨機產生文字。" class="headerlink" title="1. 進入頁面後隨機產生文字。"></a>1. 進入頁面後隨機產生文字。</h3><p>上面 JS 是用 Axios 打 API 獲取資料，jQuery 只能用 AJAX 打 API<br>本來是打 <a target="_blank" rel="noopener" href="https://randomuser.me/">RANDOM USER GENERATOR</a> 的 API，但發現 username 會有其他國家非英文的名字，所以改成打 <a target="_blank" rel="noopener" href="https://random-word-api.herokuapp.com/home">Word</a> 的 API 獲取單字資料。</p>
+<ul>
+<li>AJAX 起手式 :<br><code>url</code> : 打 API 的網址。<br><code>method</code> : 拿資料的方法。<br><code>dataType</code> : 資料的格式。<br><code>success</code> : 拿到資料後會打要做什麼事。</li>
+</ul>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">randomUser</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  $.ajax({</span><br><span class="line">    url: <span class="hljs-string">'https://random-word-api.herokuapp.com/word?number=1'</span>,</span><br><span class="line">    method: <span class="hljs-string">'get'</span>,</span><br><span class="line">    dataType: <span class="hljs-string">'json'</span>,</span><br><span class="line">    success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) </span>{</span><br><span class="line">      <span class="hljs-comment">// console.log(res);</span></span><br><span class="line">      data = res[<span class="hljs-number">0</span>]</span><br><span class="line">      <span class="hljs-comment">// console.log(data);</span></span><br><span class="line">      $(<span class="hljs-string">'#word'</span>).text(data)</span><br><span class="line">    },</span><br><span class="line">  })</span><br><span class="line">  time--</span><br><span class="line">  $(<span class="hljs-string">'#time'</span>).val(time)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-比對輸入的值是否吻合再給予獎勵"><a href="#2-比對輸入的值是否吻合再給予獎勵" class="headerlink" title="2. 比對輸入的值是否吻合再給予獎勵"></a>2. 比對輸入的值是否吻合再給予獎勵</h3><p>給個分數的初始值，把值設定成 number 型式，判斷書入的值跟單字一樣後會重打一次 API 同時刷新時間，輸入正確後會給獎勵分數。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> score = <span class="hljs-number">0</span></span><br><span class="line">$(<span class="hljs-string">'#text'</span>).on(<span class="hljs-string">'input'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> textInput = $(<span class="hljs-built_in">this</span>).val()</span><br><span class="line">  <span class="hljs-comment">// console.log(textInput);</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (textInput === data) {</span><br><span class="line">    randomUser()</span><br><span class="line">    updateTime()</span><br><span class="line">    $(<span class="hljs-string">'#text'</span>).val(<span class="hljs-string">''</span>)</span><br><span class="line">    score++</span><br><span class="line">    $(<span class="hljs-string">'#score'</span>).text(score)</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-時間內沒寫完會顯示時間到的訊息。"><a href="#3-時間內沒寫完會顯示時間到的訊息。" class="headerlink" title="3. 時間內沒寫完會顯示時間到的訊息。"></a>3. 時間內沒寫完會顯示時間到的訊息。</h3><p>設定時間初始值順便把型別轉成 number。<br>把時間寫入 DOM 元素裡面，當時間到未輸入完單字就會顯示新訊息。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> time = <span class="hljs-number">20</span></span><br><span class="line"><span class="hljs-keyword">const</span> initTime = <span class="hljs-built_in">setInterval</span>(updateTime, <span class="hljs-number">1000</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateTime</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  time--</span><br><span class="line">  $(<span class="hljs-string">'#time'</span>).text(time + <span class="hljs-string">' s '</span>)</span><br><span class="line">  <span class="hljs-keyword">if</span> (time === <span class="hljs-number">0</span>) {</span><br><span class="line">    <span class="hljs-built_in">clearInterval</span>(initTime)</span><br><span class="line">    $(<span class="hljs-string">'#end-game-container'</span>).html(<span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">    &lt;h1&gt;Time ran out&lt;/h1&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;Your final score is <span class="hljs-subst">${score}</span>&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;button onclick="location.reload()"&gt;Reload&lt;/button&gt;</span></span><br><span class="line"><span class="hljs-string">    `</span>)</span><br><span class="line">    $(<span class="hljs-string">'#end-game-container'</span>).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">'flex'</span>)</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="4-難度選單可以選擇隱藏或是顯示。"><a href="#4-難度選單可以選擇隱藏或是顯示。" class="headerlink" title="4. 難度選單可以選擇隱藏或是顯示。"></a>4. 難度選單可以選擇隱藏或是顯示。</h3><p>用 <code>toggleClass</code> 可以顯示或是隱藏某個元素。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'#settings-btn'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  $(<span class="hljs-string">'#settings'</span>).toggleClass(<span class="hljs-string">'hide'</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="5-刷新頁面後難度不會被回復預設值。"><a href="#5-刷新頁面後難度不會被回復預設值。" class="headerlink" title="5. 刷新頁面後難度不會被回復預設值。"></a>5. 刷新頁面後難度不會被回復預設值。</h3><p>難度選完後不要恢復成預設值的方法就是把資料寫進瀏覽器記憶體裡面，寫入後每次更換難度都會刷新一次頁面。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'#difficulty'</span>).change(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  difficulty = $(<span class="hljs-string">'#difficulty'</span>).val()</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(difficulty)</span><br><span class="line">  <span class="hljs-built_in">localStorage</span>.setItem(<span class="hljs-string">'difficulty'</span>, difficulty)</span><br><span class="line">  location.reload()</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">$(<span class="hljs-string">'#difficulty'</span>).val(</span><br><span class="line">  <span class="hljs-built_in">localStorage</span>.getItem(<span class="hljs-string">'difficulty'</span>) !== <span class="hljs-literal">null</span></span><br><span class="line">    ? <span class="hljs-built_in">localStorage</span>.getItem(<span class="hljs-string">'difficulty'</span>)</span><br><span class="line">    : <span class="hljs-string">'medium'</span></span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://github.com/axios/axios">Axios</a><br><a target="_blank" rel="noopener" href="https://www.udemy.com/course/web-projects-with-vanilla-javascript/learn/lecture/17842354#overview">20 Web Projects With Vanilla JavaScript</a><br><a target="_blank" rel="noopener" href="https://kuro.tw/posts/2019/02/23/%E8%AB%87%E8%AB%87-JavaScript-%E7%9A%84-setTimeout-%E8%88%87-setInterval/">談談 JavaScript 的 setTimeout 與 setInterval</a><br><a target="_blank" rel="noopener" href="https://randomuser.me/">RANDOM USER GENERATOR</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E4%BD%9C%E5%93%81%E9%9B%86/">#作品集</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/JavaScript/">#JavaScript</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/02/01/%E7%8C%9C%E6%95%B8%E5%AD%97/">JavaScript 實作 - 猜數字</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/01/26/Infinite_scroll_blog/">JavaScript 實作 - 滾動顯示文章</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2021/01/29/typingGmae/';
+        this.page.identifier = '2021/01/29/typingGmae/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

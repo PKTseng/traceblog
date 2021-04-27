@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript - var 、 let 、 const 的差別 - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="每記錄一次就會比昨天的自己更加厲害">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript - var 、 let 、 const 的差別
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2021-01-19T16:00:00.000Z" itemprop="datePublished">2021年1月20日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分鐘 讀完 (約 1695 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每當我們在命名變數的時候，都會有作用域上的困擾，或是不熟悉 var 、 let 、 const 三者之間的差別，導致環境中的變數被互相汙染，甚至影響到全域變數，為釐清這當中的觀念，決定寫一篇文章來幫助自己，方便日後回憶。</p>
+<a id="more"></a>
+
+<h2 id="var-的宣告"><a href="#var-的宣告" class="headerlink" title="var 的宣告"></a>var 的宣告</h2><blockquote>
+<p>var = variable 的縮寫</p>
+</blockquote>
+<p>當我們用 <code>var</code> 宣告變數並賦值後，如果後面又用相同的變數同樣又被賦值，那後面的值會覆蓋掉前面的值，如下</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">'ken'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(name)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>變數同樣設為 <code>name</code> ，但卻顯示後面的值。<br><img src="https://i.imgur.com/edspqWp.png"></p>
+<p>那如果用大括號包起來呢 ?<br>( 這邊用大括號是為了待會的 let 宣告比較，所埋下的伏筆 )</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">'ken'</span></span><br><span class="line"></span><br><span class="line">{</span><br><span class="line">  <span class="hljs-keyword">var</span> name = <span class="hljs-string">'kevin'</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(name)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/s531jyy.png"><br>結果還是一樣的。</p>
+<p>再輸入 <code>window.name</code> 查看，發現全域上已經有 <code>name</code> 的值了。<br><img src="https://i.imgur.com/ifNVCZs.png"></p>
+<p>其實在宣告一個變數的時候，並不是故意要覆蓋掉之前的值，但有時候就這麼的剛好命名到相同的變數名稱。</p>
+<p>用 <code>var</code> 宣告就等於是全域 ( <code>window</code> ) 的宣告，這是 <code>var</code> 的一個缺點，為防止這樣的事發生，我們可以用 <code>function</code> 包起來，防止變數互相汙染。</p>
+<h3 id="以下示範用-function-控制-var-的作用域"><a href="#以下示範用-function-控制-var-的作用域" class="headerlink" title="以下示範用 function 控制 var 的作用域"></a>以下示範用 function 控制 var 的作用域</h3><h4 id="1-只在立即函式裡面宣告-var"><a href="#1-只在立即函式裡面宣告-var" class="headerlink" title="1. 只在立即函式裡面宣告 var"></a>1. 只在立即函式裡面宣告 var</h4><p>在 <code>function</code> 裡面用 <code>var</code> 宣告變數後，分別在 <code>function</code> 裡面跟外面用 <code>console.log</code> 查看</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">;(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> functionName = <span class="hljs-string">'kevin'</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是 function 裡面的 '</span> + functionName)</span><br><span class="line">})()</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'外面的'</span> + functionName)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>顯示下圖<br><img src="https://i.imgur.com/duOiXIj.png"></p>
+<p>再用 <code>window.functionName</code> 查看，會顯示 <code>undefined</code>，就代表 <code>var</code> 會被限制在 <code>function</code> 裡面，不會汙染到外面的相同變數。<br><img src="https://i.imgur.com/gCTG8qA.png"></p>
+<h4 id="2-在立即函式裡、外同時宣告-var"><a href="#2-在立即函式裡、外同時宣告-var" class="headerlink" title="2. 在立即函式裡、外同時宣告 var"></a>2. 在立即函式裡、外同時宣告 var</h4><p>如果不信脫離函式會汙染到全域或是其他變數的話，那在立即函式外面在用 <code>var</code> 宣告相同變數，但不同值，然後再用 <code>window.functionName</code> 查看全域變數。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">;(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> functionName = <span class="hljs-string">'kevin'</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是 function 裡面的 '</span> + functionName)</span><br><span class="line">})()</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> functionName = <span class="hljs-string">'ken'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'外面的'</span> + functionName)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/NNGSXL9.png"><br>由上圖可知，如果 <code>var</code> 脫離了立即函式或是任何函示就會不受控制的污染其他相同變數，甚至是全域變數。</p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/MWjxBVQ?editors=1011">DEMO</a></p>
+<p>雖然有了 <code>function</code> 可以防止 <code>var</code> 宣告的變數汙染到其他變數，但除了 <code>function</code> 以外的 <code>for loop</code> 、<code>if else</code> 判斷式也會有不受控制的問題，以下示範</p>
+<h4 id="for-loop"><a href="#for-loop" class="headerlink" title="for loop"></a>for loop</h4><p>用 <code>var</code> 宣告條件，在 scope 裡面跟外面都加上 <code>console.log</code>。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'裡面的 i = '</span> + i)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是外面的 i = '</span> + i)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>外面會顯示 5 是因為最後還會跑一次 <code>i++</code><br>此時 <code>i = 5</code> ，不符合 <code>i &lt; 5</code> 所以跳出 <code>for loop</code><br><img src="https://i.imgur.com/jEoMSZ1.png"></p>
+<h4 id="if-else"><a href="#if-else" class="headerlink" title="if else"></a>if else</h4><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) {</span><br><span class="line">  <span class="hljs-keyword">var</span> name = <span class="hljs-string">'ken'</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(name)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-built_in">console</span>.log(name)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/J8IDSRA.png"></p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/ZEpPMgE?editors=0011">DEMO</a></p>
+<p>如果想一次防止變數遭受汙染或是不受控制的話，可以使用下一節要說的 let 宣告。</p>
+<h2 id="let-的宣告"><a href="#let-的宣告" class="headerlink" title="let 的宣告"></a>let 的宣告</h2><blockquote>
+<p>let 沒有縮寫</p>
+</blockquote>
+<p>上一段提到，如果用 var 宣告的話會不受控制或是汙染到其他變數，不過在 ES6 語法裡面，是有方法可以解決這問題的，就是 let 宣告。</p>
+<p><strong>那 let 跟 var 的差別在於作用域 { }。</strong></p>
+<p>剛才兩個變數都是用 <code>var</code> 來做宣告，後面若再用一樣的變數，那變數的值是可以被覆蓋的，但是在 <code>let</code> 宣告下是禁止的，<code>let</code> 只能遠許一個相同名稱的變數存在，以下示範</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> letName = <span class="hljs-string">'ken'</span></span><br><span class="line"></span><br><span class="line">{</span><br><span class="line">  <span class="hljs-keyword">let</span> letName = <span class="hljs-string">'kevin'</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(letName)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>會顯示 <code>Uncaught SyntaxError: Identifier 'letName' has already been declared </code>，用 <code>name</code> 命名的變數已經存在了，如下圖<br><img src="https://i.imgur.com/7819U4b.png"></p>
+<p>但是 let 是有作用域 ( scope ) 的，就是用 <code>{ }</code> 這個大括號，以下示範<br><img src="https://i.imgur.com/UT48xzX.png"></p>
+<p>上面介紹 var 那段，用大括號包起了並用 var 宣告相同變數的話，值還是會被後面命名的變數給覆蓋掉，但是在 let 並用 { } 將其中一個相同名稱的變數包起來，就會獨立出來，也不會跳出<code>Identifier 'letName' has already been declared </code> 這樣的 error 訊息，</p>
+<p>在 console.log 輸入 window.letName 會顯示 undefined，由此可知全域變數也沒有受到汙染。<br><img src="https://i.imgur.com/55Kmjyc.png"></p>
+<h3 id="以下示範-let-的作用域"><a href="#以下示範-let-的作用域" class="headerlink" title="以下示範 let 的作用域"></a>以下示範 let 的作用域</h3><p>差別只在全域變數不會受到汙染，以下示範。</p>
+<h4 id="1-只在立即函式裡面宣告-let"><a href="#1-只在立即函式裡面宣告-let" class="headerlink" title="1. 只在立即函式裡面宣告 let"></a>1. 只在立即函式裡面宣告 let</h4><p>效果會跟 var 一樣，因為 <code>var</code> 在 <code>function</code> 裡面是受控制的不會到到處汙染，<code>let</code> 是因為 scope <code>{ }</code> 的關係，所以也被限制住，scope 外面一樣讀取不到，所以會顯示 <code>undefined</code>。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">;(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">let</span> letFunctionName = <span class="hljs-string">'kevin'</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是 function 裡面的 '</span> + letFunctionName)</span><br><span class="line">})()</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'外面的'</span> + letFunctionName)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/YgAdm1b.png"></p>
+<p>用 <code>window.letFunctionName</code> 查看，全域一樣沒被汙染。<br><img src="https://i.imgur.com/xP20HGT.png"></p>
+<h4 id="2-在立即函式裡、外同時宣告-let"><a href="#2-在立即函式裡、外同時宣告-let" class="headerlink" title="2. 在立即函式裡、外同時宣告 let"></a>2. 在立即函式裡、外同時宣告 let</h4><p>效果跟 <code>var</code> 一樣。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">;(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">let</span> letFunctionName = <span class="hljs-string">'kevin'</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是 function 裡面的 '</span> + letFunctionName)</span><br><span class="line">})()</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">let</span> letFunctionName = <span class="hljs-string">'ken'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'外面的'</span> + letFunctionName)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/GsmnHQT.png"></p>
+<p>但是輸入 <code>window.letFunctionName</code> 會顯示 <code>undefined</code>，全域一樣沒被汙染。</p>
+<p><img src="https://i.imgur.com/QCbOlqE.png"></p>
+<p>也就是說只要有 <code>let</code> 宣告加上 <code>{ }</code> 的話，就會可以完全控制變數，不需要擔心變數相同名稱，也甭擔心全域變數會受到汙染。</p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/xxEBQNe?editors=0001">DEMO</a></p>
+<h2 id="const-的宣告"><a href="#const-的宣告" class="headerlink" title="const 的宣告"></a>const 的宣告</h2><blockquote>
+<p>const = constant 的縮寫</p>
+</blockquote>
+<h3 id="const-一旦被賦值後就不能再更改了。"><a href="#const-一旦被賦值後就不能再更改了。" class="headerlink" title="const 一旦被賦值後就不能再更改了。"></a>const 一旦被賦值後就不能再更改了。</h3><p>錯誤示範 :</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> constArry = <span class="hljs-number">10</span></span><br><span class="line">constArry = <span class="hljs-number">999</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(constArry)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/Krz3cy5.png"></p>
+<h3 id="但是有個特例"><a href="#但是有個特例" class="headerlink" title="但是有個特例"></a>但是有個特例</h3><p>雖然不能更改已經用 const 賦予的值，<br>但是!! 可以更改<font color="#FF0000">物件或是陣列內的值</font>。</p>
+<h4 id="範例一"><a href="#範例一" class="headerlink" title="範例一"></a>範例一</h4><p>更陣列內指定的值</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> constArry = [<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>]</span><br><span class="line">constArry[<span class="hljs-number">0</span>] = <span class="hljs-number">999</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(constArry)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>是可以的。<br><img src="https://i.imgur.com/DEbUzCk.png"></p>
+<h4 id="範例二"><a href="#範例二" class="headerlink" title="範例二"></a>範例二</h4><p>陣列內整個值換掉</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> constArry = [<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>]</span><br><span class="line">constArry = [<span class="hljs-number">666</span> <span class="hljs-number">777</span>, <span class="hljs-number">888</span>]</span><br><span class="line"><span class="hljs-built_in">console</span>.log(constArry)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>是不行的，因為更改的已經是整個變數了，不是變數內的值。<br><img src="https://i.imgur.com/rMHiWiB.png"></p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/vYXPvbJ?editors=1011">DEMO</a></p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=fJEw4eApm5I&amp;list=PLliocbKHJNwu150Kc7_eEywQBFLTJyPZs&amp;index=2&amp;t=1s">ES6 基础教学</a><br><a target="_blank" rel="noopener" href="https://courses.hexschool.com/courses/670037/lectures/11952053">JavaScript 核心篇</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/var/">#var</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/let/">#let</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/const/">#const</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/01/22/Music-player/">JavaScript 實作 - 音樂播放器</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/01/19/JS%E9%80%B2%E9%9A%8E/">JavaScript - 陣列的進階方法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2021/01/20/cosnt%E3%80%81var%E3%80%81let/';
+        this.page.identifier = '2021/01/20/cosnt、var、let/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

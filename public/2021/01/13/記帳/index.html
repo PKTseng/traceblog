@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript 實作 - 記帳簿 - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="每記錄一次就會比昨天的自己更加厲害">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript 實作 - 記帳簿
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2021-01-12T16:00:00.000Z" itemprop="datePublished">2021年1月13日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><span>></span><a class="article-category-link" href="/categories/JavaScript/%E4%BD%9C%E5%93%81%E9%9B%86/">作品集</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            15 分鐘 讀完 (約 2210 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>功能描述:<br>輸入記帳名稱並計算該物品的價格。</p>
+<p><img src="https://i.imgur.com/EKaScxe.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PKTseng/Web-Side-Project/tree/gh-pages/mission24">Github</a><br><a href="https://pktseng.github.io/Web-Side-Project/mission24/index.html">DEMO</a></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><h2 id="HTML-模板"><a href="#HTML-模板" class="headerlink" title="HTML 模板"></a>HTML 模板</h2><p>給個容器，並將顯示及輸入的內容寫在裡面，比較特別的地方是 <code>list</code> ，<code>list</code> 裡面的項目清單會交由 <code>JavaScript</code> 字串模板來撰寫</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Expense Tracker<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>Your Balance<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"balance"</span>&gt;</span>$0.00<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"inc-exp-container"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>Income<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"money-plus"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"money plus"</span>&gt;</span>+$0.00<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>Expense<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"money-minus"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"money minus"</span>&gt;</span>-$0.00<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>History<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"list"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"list"</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!-- &lt;li class="minus"&gt;</span></span><br><span class="line"><span class="hljs-comment">      Cash &lt;span&gt;-$400&lt;/span&gt;&lt;button class="delete-btn"&gt;x&lt;/button&gt;</span></span><br><span class="line"><span class="hljs-comment">    &lt;/li&gt; --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Add new transaction<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"form"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"text"</span>&gt;</span>Text<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Enter text..."</span> /&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"amount"</span></span></span><br><span class="line"><span class="hljs-tag">        &gt;</span>Amount <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="line">        (negative - expense, positive - income)<span class="hljs-tag">&lt;/<span class="hljs-name">label</span></span></span><br><span class="line"><span class="hljs-tag">      &gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"number"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"amount"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Enter amount..."</span> /&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"btn"</span>&gt;</span>Add transaction<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="CSS-樣式"><a href="#CSS-樣式" class="headerlink" title="CSS 樣式"></a>CSS 樣式</h2><p>要注意的是 <code>plus</code>、<code>minus</code> 樣式，因為這兩個樣式會透過 <code>JavaScript</code> 的函式來控制</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">@import</span> url(<span class="hljs-string">'https://fonts.googleapis.com/css?family=Lato&amp;display=swap'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-pseudo">:root</span> {</span><br><span class="line">  <span class="hljs-attribute">--box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">1px</span> <span class="hljs-number">3px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.12</span>), <span class="hljs-number">0</span> <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.24</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">* {</span><br><span class="line">  <span class="hljs-attribute">box-sizing</span>: border-box;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-tag">body</span> {</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#f7f7f7</span>;</span><br><span class="line">  <span class="hljs-attribute">display</span>: flex;</span><br><span class="line">  <span class="hljs-attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="hljs-attribute">align-items</span>: center;</span><br><span class="line">  <span class="hljs-attribute">justify-content</span>: center;</span><br><span class="line">  <span class="hljs-attribute">min-height</span>: <span class="hljs-number">100vh</span>;</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">'Lato'</span>, sans-serif;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.container</span> {</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">30px</span> auto;</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">350px</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-tag">h1</span> {</span><br><span class="line">  <span class="hljs-attribute">letter-spacing</span>: <span class="hljs-number">1px</span>;</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-tag">h3</span> {</span><br><span class="line">  <span class="hljs-attribute">border-bottom</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#bbb</span>;</span><br><span class="line">  <span class="hljs-attribute">padding-bottom</span>: <span class="hljs-number">10px</span>;</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">40px</span> <span class="hljs-number">0</span> <span class="hljs-number">10px</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-tag">h4</span> {</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">text-transform</span>: uppercase;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.inc-exp-container</span> {</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#fff</span>;</span><br><span class="line">  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-built_in">var</span>(--box-shadow);</span><br><span class="line">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">20px</span>;</span><br><span class="line">  <span class="hljs-attribute">display</span>: flex;</span><br><span class="line">  <span class="hljs-attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">20px</span> <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.inc-exp-container</span> &gt; <span class="hljs-selector-tag">div</span> {</span><br><span class="line">  <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;</span><br><span class="line">  <span class="hljs-attribute">text-align</span>: center;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.inc-exp-container</span> &gt; <span class="hljs-selector-tag">div</span><span class="hljs-selector-pseudo">:first-of-type</span> {</span><br><span class="line">  <span class="hljs-attribute">border-right</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#dedede</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.money</span> {</span><br><span class="line">  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">20px</span>;</span><br><span class="line">  <span class="hljs-attribute">letter-spacing</span>: <span class="hljs-number">1px</span>;</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">5px</span> <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.money</span><span class="hljs-selector-class">.plus</span> {</span><br><span class="line">  <span class="hljs-attribute">color</span>: <span class="hljs-number">#2ecc71</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.money</span><span class="hljs-selector-class">.minus</span> {</span><br><span class="line">  <span class="hljs-attribute">color</span>: <span class="hljs-number">#c0392b</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-tag">label</span> {</span><br><span class="line">  <span class="hljs-attribute">display</span>: inline-block;</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">10px</span> <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-tag">input</span><span class="hljs-selector-attr">[type=<span class="hljs-string">'text'</span>]</span>,</span><br><span class="line"><span class="hljs-selector-tag">input</span><span class="hljs-selector-attr">[type=<span class="hljs-string">'number'</span>]</span> {</span><br><span class="line">  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#dedede</span>;</span><br><span class="line">  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">2px</span>;</span><br><span class="line">  <span class="hljs-attribute">display</span>: block;</span><br><span class="line">  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16px</span>;</span><br><span class="line">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.btn</span> {</span><br><span class="line">  <span class="hljs-attribute">cursor</span>: pointer;</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#9c88ff</span>;</span><br><span class="line">  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-built_in">var</span>(--box-shadow);</span><br><span class="line">  <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;</span><br><span class="line">  <span class="hljs-attribute">border</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">display</span>: block;</span><br><span class="line">  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16px</span>;</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">10px</span> <span class="hljs-number">0</span> <span class="hljs-number">30px</span>;</span><br><span class="line">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.btn</span><span class="hljs-selector-pseudo">:focus</span>,</span><br><span class="line"><span class="hljs-selector-class">.delete-btn</span><span class="hljs-selector-pseudo">:focus</span> {</span><br><span class="line">  <span class="hljs-attribute">outline</span>: <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.list</span> {</span><br><span class="line">  <span class="hljs-attribute">list-style-type</span>: none;</span><br><span class="line">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">40px</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.list</span> <span class="hljs-selector-tag">li</span> {</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#fff</span>;</span><br><span class="line">  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-built_in">var</span>(--box-shadow);</span><br><span class="line">  <span class="hljs-attribute">color</span>: <span class="hljs-number">#333</span>;</span><br><span class="line">  <span class="hljs-attribute">display</span>: flex;</span><br><span class="line">  <span class="hljs-attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="hljs-attribute">position</span>: relative;</span><br><span class="line">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;</span><br><span class="line">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">10px</span> <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.list</span> <span class="hljs-selector-tag">li</span><span class="hljs-selector-class">.plus</span> {</span><br><span class="line">  <span class="hljs-attribute">border-right</span>: <span class="hljs-number">5px</span> solid <span class="hljs-number">#2ecc71</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.list</span> <span class="hljs-selector-tag">li</span><span class="hljs-selector-class">.minus</span> {</span><br><span class="line">  <span class="hljs-attribute">border-right</span>: <span class="hljs-number">5px</span> solid <span class="hljs-number">#c0392b</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.delete-btn</span> {</span><br><span class="line">  <span class="hljs-attribute">cursor</span>: pointer;</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#e74c3c</span>;</span><br><span class="line">  <span class="hljs-attribute">border</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;</span><br><span class="line">  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">20px</span>;</span><br><span class="line">  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">20px</span>;</span><br><span class="line">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">2px</span> <span class="hljs-number">5px</span>;</span><br><span class="line">  <span class="hljs-attribute">position</span>: absolute;</span><br><span class="line">  <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;</span><br><span class="line">  <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translate</span>(-<span class="hljs-number">100%</span>, -<span class="hljs-number">50%</span>);</span><br><span class="line">  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">transition</span>: opacity <span class="hljs-number">0.3s</span> ease;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.list</span> <span class="hljs-selector-tag">li</span><span class="hljs-selector-pseudo">:hover</span> <span class="hljs-selector-class">.delete-btn</span> {</span><br><span class="line">  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>所有互動將從這邊開始撰寫，也算是重頭戲!</p>
+<h3 id="1-首先抓取-DOM-元素並設定成變數"><a href="#1-首先抓取-DOM-元素並設定成變數" class="headerlink" title="1. 首先抓取 DOM 元素並設定成變數"></a>1. 首先抓取 DOM 元素並設定成變數</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> balance = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#balance'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> moneyPlus = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#money-plus'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> moneyMinus = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#money-minus'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> list = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#list'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> text = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#text'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> form = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#form'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> amount = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#amount'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-新增-DOM-list-項目清單"><a href="#2-新增-DOM-list-項目清單" class="headerlink" title="2. 新增 DOM list 項目清單"></a>2. 新增 DOM list 項目清單</h3><p>為了方便測試先寫一個陣列的假資料</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> dummyTransactions = [</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Flower'</span>, <span class="hljs-attr">amount</span>: <span class="hljs-number">-20</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Salary'</span>, <span class="hljs-attr">amount</span>: <span class="hljs-number">300</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Book'</span>, <span class="hljs-attr">amount</span>: <span class="hljs-number">-10</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Camera'</span>, <span class="hljs-attr">amount</span>: <span class="hljs-number">150</span> },</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 將假資料暫時帶入 transaction 變數裡面</span></span><br><span class="line"><span class="hljs-keyword">let</span> transactions = dummyTransactions</span><br></pre></td></tr></tbody></table></figure>
+
+<p>接著撰寫新增 list 項目清單，因為在撰寫項目清單時不確定會有幾個，因此在這邊用字串模板的方式載入，為了要載入新的項目必須要創建新的元素，這時候可以用 <code>createElement</code> 的方式來新增，新增好後要透過輸入的值來判斷是正還是負，這樣可以連帶綁定 css 樣式的顏色，最後利用字串模板的方式來顯示項目，不果字串模板裡面已經有判斷正負號了，所以後面的值就用 <code>Math.abs</code> 取絕對值的方式來顯示。</p>
+<h4 id="步驟如下"><a href="#步驟如下" class="headerlink" title="步驟如下:"></a>步驟如下:</h4><ol>
+<li>新增函式</li>
+<li>判斷正負號</li>
+<li>新增項目元素，同時賦予到 <code>item</code> 變數上</li>
+<li>判斷 <code>item</code> 輸入的值決定要綁定的顏色</li>
+<li>用字串模板的方式將值賦予到 <code>item</code></li>
+<li>再將 <code>item</code> 透過 <code>appendChild</code> 的方式塞到 <code>list</code> 元素裡面</li>
+</ol>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addTransactionDOM</span>(<span class="hljs-params">transaction</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 判斷正負值</span></span><br><span class="line">  <span class="hljs-keyword">const</span> sign = transaction.amount &gt; <span class="hljs-number">0</span> ? <span class="hljs-string">'+'</span> : <span class="hljs-string">'-'</span></span><br><span class="line">  <span class="hljs-comment">// console.log(sign)</span></span><br><span class="line">  <span class="hljs-comment">// 新增 li 元素</span></span><br><span class="line">  <span class="hljs-keyword">const</span> item = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'li'</span>)</span><br><span class="line">  <span class="hljs-comment">// console.log(item)</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 將 className 新增到 item ，判斷顯示的顏色</span></span><br><span class="line">  item.classList.add(transaction.amount &gt; <span class="hljs-number">0</span> ? <span class="hljs-string">'plus'</span> : <span class="hljs-string">'minus'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// removeTransaction 要綁id ，不然會刪到同名的</span></span><br><span class="line">  item.innerHTML = <span class="hljs-string">`<span class="hljs-subst">${transaction.text}</span>&lt;span&gt;<span class="hljs-subst">${sign}</span><span class="hljs-subst">${<span class="hljs-built_in">Math</span>.abs(</span></span></span><br><span class="line"><span class="hljs-string"><span class="hljs-subst">    transaction.amount</span></span></span><br><span class="line"><span class="hljs-string"><span class="hljs-subst">  )}</span>&lt;/span&gt;&lt;button&gt;X&lt;/button&gt;`</span></span><br><span class="line"></span><br><span class="line">  list.appendChild(item)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-初始化"><a href="#3-初始化" class="headerlink" title="3. 初始化"></a>3. 初始化</h3><p>每當執行完某些動作時，都要將值初始化</p>
+<p><code>forEach</code> :會將陣列中每個元素套用到指定的函式裡進行運算。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 輸入完之後 list 要回復空值</span></span><br><span class="line">  list.innerHTML = <span class="hljs-string">''</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 將假資料丟到 addTransactionDOM 函式裡面運算</span></span><br><span class="line">  transactions.forEach(addTransactionDOM)</span><br><span class="line"></span><br><span class="line">  updateValue()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">init() <span class="hljs-comment">// 執行</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="4-監聽-form-表單內輸入的值"><a href="#4-監聽-form-表單內輸入的值" class="headerlink" title="4. 監聽 form 表單內輸入的值"></a>4. 監聽 form 表單內輸入的值</h3><p>接下來要判斷表單內輸入的值是否正確，如果輸入正確，將值同時綁定到 key 上，這麼做是為了防止刪除到同名的項目，像是用身分證綁定每筆資料的概念。</p>
+<p>首先利用 <code>callbakc function</code> 的方式將函式賦予到 <code>addTransaction</code> 參數上，再用 if 判斷式判斷輸入的值是否為空值，如果不是空值，將輸入的值綁定到物件的 key 上，同時執行個兩函式</p>
+<ol>
+<li>將 <code>transaction</code> 變數新增到陣列清單裡面(這邊暫時用假資料的陣列)</li>
+<li>將 <code>transaction</code> 帶到 <code>addTransactionDOM</code> 函式執行</li>
+</ol>
+<p>然後再將輸入框的值清空</p>
+<p><code>Math.floor</code> :將有小數的值取成整數<br><code>Math.random</code> :取亂數，建立變數的身分證</p>
+<h4 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h4><ol>
+<li>監聽表單元素</li>
+<li>判斷輸入值同時將輸入的值用 id 綁定</li>
+<li>同時執行三的動作，將值新增到陣列內、判斷輸入值得正負、將值清空</li>
+</ol>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addTransaction</span>(<span class="hljs-params">e</span>) </span>{</span><br><span class="line">  e.preventDefault()</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 先判斷輸入是否為空值，若不是則繼續執行</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (text.value === <span class="hljs-string">''</span> || amount.value === <span class="hljs-string">''</span>) {</span><br><span class="line">    alert(<span class="hljs-string">'請重新輸入'</span>)</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    <span class="hljs-comment">// 如果不是空值，將輸入的 value 帶入 key 裡</span></span><br><span class="line">    <span class="hljs-keyword">const</span> transaction = {</span><br><span class="line">      id: generateID(),</span><br><span class="line">      text: text.value,</span><br><span class="line">      amount: +amount.value, <span class="hljs-comment">//前面的+是為了轉成 number 型別</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 將新增的 transaction 物件加入到 transactions 物陣列內</span></span><br><span class="line">    transactions.push(transaction)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 執行 addTransactionDOM 函式，並帶入transaction</span></span><br><span class="line">    addTransactionDOM(transaction)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 執行帶值跟計算</span></span><br><span class="line">    updateValue()</span><br><span class="line">    updateLocalStorage()</span><br><span class="line">    <span class="hljs-comment">// 輸入完後恢復空值</span></span><br><span class="line">    text.value = <span class="hljs-string">''</span></span><br><span class="line">    amount.value = <span class="hljs-string">''</span></span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateID</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">1000000</span>)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">form.addEventListener(<span class="hljs-string">'submit'</span>, addTransaction)</span><br></pre></td></tr></tbody></table></figure>
+
+<hr>
+<h3 id="5-計算收入與支出"><a href="#5-計算收入與支出" class="headerlink" title="5. 計算收入與支出"></a>5. 計算收入與支出</h3><p>以上判斷值的正確性跟顯示的樣式都寫好了，接下來要計算輸入的值<br>將 <code>transaction </code> 帶到 <code>transaction.amount</code> 裡面，再用 <code>map</code> 計算，判斷陣列內值，再將值賦予到 <code>amounts</code> 變數裡面，透過 <code>amounts</code> 變數去計算總結、收入、支出的值。</p>
+<p>算好後將計算的值賦予到 DOM 元素上這樣就可以顯示計算的值了。</p>
+<ul>
+<li><code>acc</code> 是計算出來的總值， <code>item</code> 是每次新增的每一筆資料。</li>
+<li><code>map</code> :處理陣列中每個元素，最後回傳出一個新的陣列。</li>
+<li><code>filter</code> :會將陣列中的「每一個」元素帶入指定的函式內做判斷，如果元素符合判斷條件則會產生新的陣列元素。</li>
+<li><code>reduce</code> :將陣列中每個元素進行計算，每次計算的結果會再與下個元素作計算，直到結束為止。</li>
+</ul>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateValue</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> amounts = transactions.map(<span class="hljs-function">(<span class="hljs-params">transaction</span>) =&gt;</span> transaction.amount)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 計算總結</span></span><br><span class="line">  <span class="hljs-keyword">const</span> total = amounts.reduce(<span class="hljs-function">(<span class="hljs-params">acc, item</span>) =&gt;</span> (acc += item), <span class="hljs-number">0</span>).toFixed(<span class="hljs-number">2</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 計算收入</span></span><br><span class="line">  <span class="hljs-keyword">const</span> income = amounts</span><br><span class="line">    .filter(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> item &gt; <span class="hljs-number">0</span>)</span><br><span class="line">    .reduce(<span class="hljs-function">(<span class="hljs-params">acc, item</span>) =&gt;</span> (acc += item), <span class="hljs-number">0</span>)</span><br><span class="line">    .toFixed(<span class="hljs-number">2</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 計算支出</span></span><br><span class="line">  <span class="hljs-keyword">const</span> expense =</span><br><span class="line">    amounts.filter(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> item &lt; <span class="hljs-number">0</span>).reduce(<span class="hljs-function">(<span class="hljs-params">acc, item</span>) =&gt;</span> (acc += item), <span class="hljs-number">0</span>) *</span><br><span class="line">    <span class="hljs-number">-1</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 將 total、income、expense 塞到各 dom 裡面</span></span><br><span class="line">  balance.innerHTML = <span class="hljs-string">`<span class="hljs-subst">${total}</span>`</span></span><br><span class="line">  moneyPlus.innerHTML = <span class="hljs-string">`<span class="hljs-subst">${income}</span>`</span></span><br><span class="line">  moneyMinus.innerHTML = <span class="hljs-string">`<span class="hljs-subst">${expense}</span>`</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<hr>
+<h3 id="6-移除輸入的值"><a href="#6-移除輸入的值" class="headerlink" title="6. 移除輸入的值"></a>6. 移除輸入的值</h3><p>如果有新增的項目不要了，那就會用到刪除，刪除的函式是認剛才綁定的 id 就是陣列的身分證，觸發條件是當我 <code>onclick</code> 的時候就可以移除剛該筆項目。</p>
+<p>在剛才的 <code>addTransactionDOM</code> 裡面有個字串模板，因為項目是在這邊創建的，那刪除也一起寫在這，透過 <code>removeTransaction</code> 函式綁定 <code>id</code></p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">item.innerHTML = <span class="hljs-string">`<span class="hljs-subst">${transaction.text}</span></span></span><br><span class="line"><span class="hljs-string">&lt;span&gt;<span class="hljs-subst">${sign}</span><span class="hljs-subst">${<span class="hljs-built_in">Math</span>.abs(transaction.amount)}</span>&lt;/span&gt;</span></span><br><span class="line"><span class="hljs-string">&lt;button class='delete-btn' onclick='removeTransaction(<span class="hljs-subst">${transaction.id}</span>)'&gt;</span></span><br><span class="line"><span class="hljs-string">X</span></span><br><span class="line"><span class="hljs-string">&lt;/button&gt;`</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>刪除的函式</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">removeTransaction</span>(<span class="hljs-params">id</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">//記得帶 id 參數，不然會 fail</span></span><br><span class="line">  <span class="hljs-comment">//邏輯??</span></span><br><span class="line">  transactions = transactions.filter(<span class="hljs-function">(<span class="hljs-params">transaction</span>) =&gt;</span> transaction.id !== id)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 刪除後重新儲存在本地端</span></span><br><span class="line">  updateLocalStorage()</span><br><span class="line">  init()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<hr>
+<h3 id="7-將計算的歷史紀錄保存起來，並存在本地端"><a href="#7-將計算的歷史紀錄保存起來，並存在本地端" class="headerlink" title="7. 將計算的歷史紀錄保存起來，並存在本地端"></a>7. 將計算的歷史紀錄保存起來，並存在本地端</h3><p>因為要要記錄自己新增的每筆資料，所以之前代替用的假資料可以刪掉了</p>
+<ol>
+<li><code>Storage.setItem('key', 'value')</code>：<br>透過在 <code>setItem()</code> 方法中指定物件屬性的 <code>key</code> 以及 <code>value</code> ，<br>我們可以在 <code>storage</code> 物件中加入屬性或修改原本的屬性內容。</li>
+</ol>
+<p>2.<code> Storage.getItem('key')</code>：<br>透過在 <code>getItem()</code> 方法中輸入屬性的 <code>key</code> ，我們可以得到 <code>storage</code> 物件對應的屬性 <code>value</code> 。</p>
+<hr>
+<p>利用 <code>getItem</code> 將 <code>transactions</code> 的 <code>key</code> 值輸入到 <code>localStorage</code> 裡面，再利用 <code>JSON.parse</code> 將值轉成物件格式，然後在賦予到 <code>localStorageTransactions</code> 變數中</p>
+<p>如果 <code>localStorage</code> 抓到的值是 <code>null</code> 會自動轉換成空值</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> localStorageTransactions = <span class="hljs-built_in">JSON</span>.parse(</span><br><span class="line">  <span class="hljs-built_in">localStorage</span>.getItem(<span class="hljs-string">'transactions'</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">let</span> transactions =</span><br><span class="line">  <span class="hljs-built_in">localStorage</span>.getItem(<span class="hljs-string">'transactions'</span>) !== <span class="hljs-literal">null</span> ? localStorageTransactions : []</span><br></pre></td></tr></tbody></table></figure>
+
+<p>利用 <code>setItem</code> 的方式將 <code>transactions</code> 設定成 <code>key</code> ，將 <code>transactions</code> 透過 <code>JSON.stringify</code> 的方式轉成字串並設定成 <code>value</code> ，加到 <code>addTransaction</code>、<code>removeTransaction</code> 函式裡面，這樣在新增每筆資料的時候不只同時綁定 <code>id</code> 還記錄到了本地端的歷史紀錄裡面。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateLocalStorage</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">localStorage</span>.setItem(<span class="hljs-string">'transactions'</span>, <span class="hljs-built_in">JSON</span>.stringify(transactions))</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10195522">JS30-Day15-LocalStorage</a><br><a target="_blank" rel="noopener" href="https://www.oxxostudio.tw/articles/201908/js-array.html#array_foreach">JavaScript Array 陣列操作方法大全 ( 含 ES6 )</a><br><a target="_blank" rel="noopener" href="https://www.udemy.com/course/web-projects-with-vanilla-javascript/learn/lecture/17842252#overview">20 Web Projects With Vanilla JavaScript</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/jQuery/">#jQuery</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E4%BD%9C%E5%93%81%E9%9B%86/">#作品集</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/JavaScript/">#JavaScript</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/01/13/jQuery%20-%20%E4%BA%8B%E4%BB%B6%20(event)/">jQuery - 基本使用</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/01/08/changeRate/">JavaScript 實作 - 簡易版匯率轉換</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2021/01/13/%E8%A8%98%E5%B8%B3/';
+        this.page.identifier = '2021/01/13/記帳/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

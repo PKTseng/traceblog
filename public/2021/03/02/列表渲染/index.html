@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Vue - 列表渲染 - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="用 v-for 把陣列轉換為一組元素">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Vue - 列表渲染
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2021-03-01T16:00:00.000Z" itemprop="datePublished">2021年3月2日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Vue/">Vue</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            8 分鐘 讀完 (約 1256 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h2 id="8-1-用-v-for-把陣列轉換為一組元素"><a href="#8-1-用-v-for-把陣列轉換為一組元素" class="headerlink" title="8-1 用 v-for 把陣列轉換為一組元素"></a>8-1 用 v-for 把陣列轉換為一組元素</h2><p>將 <code>data</code> 裡面的 <code>todo</code> 陣列顯示在 <code>li</code> 上，<code>v-for="todos in todo"</code> 後面的<code>todos</code> 代表陣列，前面的<code>todo</code> 代表陣列裡面的每個元素</p>
+<a id="more"></a>
+
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"todos in todo"</span>&gt;</span>{{todos}}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    todo: [<span class="hljs-string">'html'</span>, <span class="hljs-string">'javascript'</span>, <span class="hljs-string">'css'</span>],</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/br0hybR.png"></p>
+<hr>
+<h3 id="下拉選單"><a href="#下拉選單" class="headerlink" title="下拉選單"></a>下拉選單</h3><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">select</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"month in months"</span>&gt;</span>{{month}}<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    months: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>],</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/yLemJQy?editors=1010">codepen</a></p>
+<p>這種數字的有另一個寫法，可以將 <code>months</code> 改寫成數字，而改寫的數字就會是最大值，而 <code>months</code> 的陣列可以刪除。<br>範例如下:</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">select</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"month in 30"</span>&gt;</span>{{month}}<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {},</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就會有 30 個數字選項</p>
+<h3 id="月份綁-value"><a href="#月份綁-value" class="headerlink" title="月份綁 value"></a>月份綁 value</h3><p>這是在陣列是字串下，但又希望 value 值是數字 123，這時可以在 <code>month</code> 後面加上 <code>index</code> 或是 <code>idx</code> 、 <code>i </code>等等任意變數，再用 <code>v-bind</code> 綁 <code>value</code></p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">select</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"(month, index) in months"</span> <span class="hljs-attr">:vlaue</span>=<span class="hljs-string">"index+1"</span>&gt;</span>{{month}}<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    months: [</span><br><span class="line">      <span class="hljs-string">'Jan'</span>,</span><br><span class="line">      <span class="hljs-string">'Feb'</span>,</span><br><span class="line">      <span class="hljs-string">'Mar'</span>,</span><br><span class="line">      <span class="hljs-string">'Apr'</span>,</span><br><span class="line">      <span class="hljs-string">'May'</span>,</span><br><span class="line">      <span class="hljs-string">'Jun'</span>,</span><br><span class="line">      <span class="hljs-string">'Jul'</span>,</span><br><span class="line">      <span class="hljs-string">'Aug'</span>,</span><br><span class="line">      <span class="hljs-string">'Sep'</span>,</span><br><span class="line">      <span class="hljs-string">'Oct'</span>,</span><br><span class="line">      <span class="hljs-string">'Nov'</span>,</span><br><span class="line">      <span class="hljs-string">'Dec'</span>,</span><br><span class="line">    ],</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/8HMNTpb.png"><br><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/MWKNjgK?editors=1010">codepen</a></p>
+<hr>
+<h2 id="8-2-用-v-for-把一個物件轉換為一組元素"><a href="#8-2-用-v-for-把一個物件轉換為一組元素" class="headerlink" title="8-2 用 v-for 把一個物件轉換為一組元素"></a>8-2 用 v-for 把一個物件轉換為一組元素</h2><p>如果要取物件內的 key 值，就在 value 後面加上 key 就好<br>跟陣列很像，<strong>陣列</strong>是 (元素, idx) ，<strong>物件</strong>是 (value, key)</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"(value, key) in obj"</span>&gt;</span>{{key}} : {{value}}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">new</span> Vue({</span></span><br><span class="line"><span class="hljs-javascript">    el: <span class="hljs-string">'#app'</span>,</span></span><br><span class="line">    data: {</span><br><span class="line">      obj: {</span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 前面為 key: 後面為 value</span></span></span><br><span class="line"><span class="hljs-javascript">        name: <span class="hljs-string">'PKT'</span>,</span></span><br><span class="line"><span class="hljs-javascript">        number: <span class="hljs-string">'123456'</span>,</span></span><br><span class="line"><span class="hljs-javascript">        age: <span class="hljs-string">'22'</span>,</span></span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/2WF7ILF.png"></p>
+<hr>
+<p>v-for 轉物件，渲染出來的順序不一定會跟我寫的一樣，例如我用不規律的數字做開頭</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"(value, key) in obj"</span>&gt;</span>{{key}} : {{value}}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">new</span> Vue({</span></span><br><span class="line"><span class="hljs-javascript">    el: <span class="hljs-string">'#app'</span>,</span></span><br><span class="line">    data: {</span><br><span class="line">      obj: {</span><br><span class="line"><span class="hljs-javascript">        name: <span class="hljs-string">'PKT'</span>,</span></span><br><span class="line"><span class="hljs-javascript">        number: <span class="hljs-string">'123456'</span>,</span></span><br><span class="line"><span class="hljs-javascript">        age: <span class="hljs-string">'22'</span>,</span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-number">12</span>: <span class="hljs-string">'中餐'</span>,</span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-number">8</span>: <span class="hljs-string">'早餐'</span>,</span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-number">6</span>: <span class="hljs-string">'晚餐'</span>,</span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-number">2</span>: <span class="hljs-string">'宵夜'</span>,</span></span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>渲染出來的結果會長這樣<br><img src="https://i.imgur.com/hKlcyV5.png"><br>明明我的順序是 12 =&gt; 8 =&gt; 6 =&gt; 2，但是選染出來卻是按照順序排列，這是因為我們用 <strong>v-for 來轉物件</strong>，若真要按照順序排列的話 code 也不會這樣打，但這是特定情況，必須依照我寫 code 的順序排列，所以就要用 <strong>v-for 轉陣列</strong>的方式，來修正。</p>
+<p>先把物件轉陣列型式，並且在陣列內新增 prop &amp; value 屬性<br>再把 v-for 轉成陣列，下面的 obj 是陣列</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in obj"</span>&gt;</span>{{item.prop}} : {{item.value}}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">new</span> Vue({</span></span><br><span class="line"><span class="hljs-javascript">    el: <span class="hljs-string">'#app'</span>,</span></span><br><span class="line">    data: {</span><br><span class="line">      obj: [</span><br><span class="line"><span class="hljs-javascript">        { <span class="hljs-attr">prop</span>: <span class="hljs-string">'name'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'PKT'</span> },</span></span><br><span class="line"><span class="hljs-javascript">        { <span class="hljs-attr">prop</span>: <span class="hljs-string">'number'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'123456'</span> },</span></span><br><span class="line"><span class="hljs-javascript">        { <span class="hljs-attr">prop</span>: <span class="hljs-string">'age'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'22'</span> },</span></span><br><span class="line"><span class="hljs-javascript">        { <span class="hljs-attr">prop</span>: <span class="hljs-number">12</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'中餐'</span> },</span></span><br><span class="line"><span class="hljs-javascript">        { <span class="hljs-attr">prop</span>: <span class="hljs-number">8</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'早餐'</span> },</span></span><br><span class="line"><span class="hljs-javascript">        { <span class="hljs-attr">prop</span>: <span class="hljs-number">6</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'晚餐'</span> },</span></span><br><span class="line"><span class="hljs-javascript">        { <span class="hljs-attr">prop</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'宵夜'</span> },</span></span><br><span class="line">      ],</span><br><span class="line">    },</span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/ZEWoRoy?editors=1010">code</a><br>這樣就可以依照我指定的順序來顯示了<br><img src="https://i.imgur.com/8O4Uqwo.png"></p>
+<hr>
+<h2 id="修改陣列或物件的注意事項"><a href="#修改陣列或物件的注意事項" class="headerlink" title="修改陣列或物件的注意事項"></a>修改陣列或物件的注意事項</h2><p>常用語法：</p>
+<ol>
+<li>push: 新增數字</li>
+<li>pop: 減少數字</li>
+<li>shift: 移除並回傳陣列的第一個元素</li>
+<li>unshift: 從陣列開頭塞數字</li>
+<li>splice: 從頭數到第 X 個，移除 Y 個，加入 Z</li>
+<li>sort: 把亂掉的順序，按順序排列</li>
+<li>reverse: 順序顛倒</li>
+</ol>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in nums"</span>&gt;</span>{{item}}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"add"</span>&gt;</span>add<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">new</span> Vue({</span></span><br><span class="line"><span class="hljs-javascript">    el: <span class="hljs-string">'#app'</span>,</span></span><br><span class="line">    data: {</span><br><span class="line">      nums: [1, 2, 3, 4, 5],</span><br><span class="line"></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// sort 用</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// nums:[1,3,5,7,2,4,6,8],</span></span></span><br><span class="line">    },</span><br><span class="line">    methods: {</span><br><span class="line">      add() {</span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.push(this.nums.length+1);</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.pop();</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.shift();</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.unshift(0);</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.splice(idx, length);</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.splice(2, 1, 9,8,7,);</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">//</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.sort();</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.reverse();</span></span></span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/NWNMLgO?editors=1010">code</a></p>
+<hr>
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><p><a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/filters.html">文件</a><br><code>filter</code> 會把陣列內的所有元素拿去跑函式，同時又不會更動原本的陣列，而是產生新的陣列。<br>那函式跑完回傳的值是 true ，就會產生新的陣列，是 false 就不會有新元素出現在新陣列內。</p>
+<p>簡言之，就是把原本的陣列過濾並產生新的陣列。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in nums"</span>&gt;</span>{{item}}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"add"</span>&gt;</span>add<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">new</span> Vue({</span></span><br><span class="line"><span class="hljs-javascript">    el: <span class="hljs-string">'#app'</span>,</span></span><br><span class="line">    data: {</span><br><span class="line">      nums: [1, 2, 3, 4, 5, 6, 7, 8, 9],</span><br><span class="line">    },</span><br><span class="line">    methods: {</span><br><span class="line">      add() {</span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-built_in">this</span>.nums = <span class="hljs-built_in">this</span>.nums.filter(<span class="hljs-function">(<span class="hljs-params">elm</span>) =&gt;</span> elm % <span class="hljs-number">2</span> === <span class="hljs-number">0</span>)</span></span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/BaKVyym?editors=1010">code</a><br>過濾後會變成下圖<br><img src="https://i.imgur.com/t5ziwrX.png"></p>
+<hr>
+<h3 id="修改陣列並反應在元素上"><a href="#修改陣列並反應在元素上" class="headerlink" title="修改陣列並反應在元素上"></a>修改陣列並反應在元素上</h3><p>想感變陣列內的值可以用 <code>splice</code></p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in nums"</span>&gt;</span>{{item}}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"add"</span>&gt;</span>add<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">new</span> Vue({</span></span><br><span class="line"><span class="hljs-javascript">    el: <span class="hljs-string">'#app'</span>,</span></span><br><span class="line">    data: {</span><br><span class="line">      nums: [1, 2, 3, 4, 5, 6, 7, 8, 9],</span><br><span class="line">    },</span><br><span class="line">    methods: {</span><br><span class="line">      add() {</span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 這樣是不會有任何反應的</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums[0] = 10;</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 從第2個，移除1個，加入789 或是 單值</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 從第0開始算，移除1開始算</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.splice(2, 1, 7,8,9);</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 從第 X 個之後都移除掉</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 移除1開始算</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.splice(2);</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 只保留從 X 到 Y，其他移除掉</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 從第0開始算，移除1開始算</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// slice(從, 第)</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums = this.nums.slice(1, 4);</span></span></span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/VwadYbP?editors=1010">code</a></p>
+<hr>
+<h3 id="物件內新增值"><a href="#物件內新增值" class="headerlink" title="物件內新增值"></a>物件內新增值</h3><p>以上都是 v-for 轉陣列，現在是轉物件，並在物件內新增值</p>
+<p>新方法 <code>$set(設定屬性的物件, 設定物件的 key, key 的值)</code></p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"(item, key) in nums"</span>&gt;</span>{{key}}: {{item}}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"add"</span>&gt;</span>add<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">new</span> Vue({</span></span><br><span class="line"><span class="hljs-javascript">    el: <span class="hljs-string">'#app'</span>,</span></span><br><span class="line">    data: {</span><br><span class="line">      nums: {</span><br><span class="line">        x: 10,</span><br><span class="line">        y: 20,</span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">    methods: {</span><br><span class="line">      add() {</span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 這樣是無法新增的</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// this.nums.z = 30;</span></span></span><br><span class="line"></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-built_in">this</span>.$set(<span class="hljs-built_in">this</span>.nums, <span class="hljs-string">'z'</span>, <span class="hljs-number">30</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 除了 $set 還可以用 Vue，但是用 Vue 就沒有$</span></span></span><br><span class="line"><span class="hljs-javascript">        Vue.set(<span class="hljs-built_in">this</span>.nums, <span class="hljs-string">'z'</span>, <span class="hljs-number">30</span>)</span></span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/vYGrEaW?editors=1010">code</a><br>這樣就可以新增了<br><img src="https://i.imgur.com/pjDK5Rr.png"></p>
+<p>以上是示範物件內原本沒有的，但是要新增新的物件，才會用到 set<br>那如果原本就有的，但是要修改原本的物件要怎麼寫? 以下示範</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"(item, key) in nums"</span>&gt;</span>{{key}}: {{item}}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"add"</span>&gt;</span>add<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">new</span> Vue({</span></span><br><span class="line"><span class="hljs-javascript">    el: <span class="hljs-string">'#app'</span>,</span></span><br><span class="line">    data: {</span><br><span class="line">      nums: {</span><br><span class="line">        x: 10,</span><br><span class="line">        y: 20,</span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">    methods: {</span><br><span class="line">      add() {</span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-built_in">this</span>.nums.x = <span class="hljs-number">30</span></span></span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/bGpKNZz?editors=1010">code</a></p>
+<hr>
+<h2 id="參考資料-精通-VueJS-前端開發完全指南"><a href="#參考資料-精通-VueJS-前端開發完全指南" class="headerlink" title="參考資料:精通 VueJS 前端開發完全指南"></a><a target="_blank" rel="noopener" href="https://hiskio.com/courses/145">參考資料:精通 VueJS 前端開發完全指南</a></h2></body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/8-1%E7%94%A8-v-for-%E6%8A%8A%E9%99%A3%E5%88%97%E8%BD%89%E6%8F%9B%E7%82%BA%E4%B8%80%E7%B5%84%E5%85%83%E7%B4%A0/">#8-1用 v-for 把陣列轉換為一組元素</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/8-2%E7%94%A8-v-for-%E6%8A%8A%E4%B8%80%E5%80%8B%E7%89%A9%E4%BB%B6%E8%BD%89%E6%8F%9B%E7%82%BA%E4%B8%80%E7%B5%84%E5%85%83%E7%B4%A0/">#8-2用 v-for 把一個物件轉換為一組元素</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/8-3%E4%BF%AE%E6%94%B9%E9%99%A3%E5%88%97%E6%88%96%E7%89%A9%E4%BB%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85/">#8-3修改陣列或物件的注意事項</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/03/03/%E8%A1%A8%E5%96%AE%E7%B6%81%E5%AE%9A%E2%80%94%E6%8C%89%E9%88%95/">Vue - 表單綁定—按鈕</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/03/02/props/">Vue - 父組件傳遞到子組件的  props 語法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2021/03/02/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/';
+        this.page.identifier = '2021/03/02/列表渲染/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

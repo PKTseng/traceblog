@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript - 監聽事件 - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="了解 eventListener 與 callback function">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript - 監聽事件
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-07-15T16:00:00.000Z" itemprop="datePublished">2020年7月16日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分鐘 讀完 (約 995 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h2 id="學習方向"><a href="#學習方向" class="headerlink" title="學習方向"></a>學習方向</h2><ol>
+<li>介面:如何改變事件</li>
+<li>事件:如何監聽事件並做出反應</li>
+<li>資料:如何跟 sever 交換資料<a id="more"></a>
+
+</li>
+</ol>
+<hr>
+<h2 id="eventListener-與-callback-function"><a href="#eventListener-與-callback-function" class="headerlink" title="eventListener 與 callback function"></a>eventListener 與 callback function</h2><h3 id="eventListener"><a href="#eventListener" class="headerlink" title="eventListener"></a>eventListener</h3><p>給一個屬性跟屬性值，再用 <code>document.querySelector</code> 選一個元素並命名為 app ，透過點擊 hello world 做出彈跳視窗，那想做出彈跳視窗必須偵聽事件 <code>addEventListener</code> ，在 <code>addEventListener</code> 前面是事件的動作例如點擊或是按鍵盤…等等，那後面要傳入一個函式。</p>
+<h3 id="callback-function"><a href="#callback-function" class="headerlink" title="callback function"></a>callback function</h3><p>因為不知道使用者甚麼時候才會觸發函式(做甚麼動作)，所以我們必須跟瀏覽器說一但點擊了甚麼按鈕或是做了什麼動作(事件)，就幫我呼叫那個函式(觸發)，那呼叫函式就是 <code>callback function</code></p>
+<p>EX:</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>&gt;</span>hello world<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">&lt;!-- -------------------------------------------&gt;</span></span><br><span class="line"><span class="hljs-comment">&lt;!-- 匿名函式 比較常見寫法--&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">let</span> app = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.app'</span>)</span></span><br><span class="line"><span class="hljs-javascript">  app.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span></span><br><span class="line"><span class="hljs-javascript">    alert(<span class="hljs-string">'hello world'</span>)</span></span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-comment">&lt;!---------------------------------------------&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">let</span> app = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.app'</span>)</span></span><br><span class="line"><span class="hljs-javascript">  app.addEventListener(<span class="hljs-string">'click'</span>, onClick)</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onClick</span>(<span class="hljs-params"></span>) </span>{</span></span><br><span class="line"><span class="hljs-javascript">    alert(<span class="hljs-string">'hello world'</span>)</span></span><br><span class="line">  }</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/BYG7UOJ.png"></p>
+<hr>
+<h2 id="event-e"><a href="#event-e" class="headerlink" title="event(e)"></a>event(e)</h2><p>當我們觸發事件時，瀏覽器就會把參數(event 縮寫為 e)帶入函示裡面。<br>使用 <code>console.log(e)</code> ，可以看到很多關於 e 的參數。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>&gt;</span>hello world<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">let</span> app = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.app'</span>);</span></span><br><span class="line"><span class="hljs-javascript">  app.addEventListener(<span class="hljs-string">'click'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>{</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-built_in">console</span>.log(e);</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/WqDxtOD.png"></p>
+<p>改用 <code>console.log(e.target)</code><br><img src="https://i.imgur.com/TFYrlsD.png"></p>
+<p>當然如果想知道按鍵參數的話可以這樣寫<br>先改為全域 window</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"app"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'keypress'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{</span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-built_in">console</span>.log(e.keyCode)</span></span><br><span class="line">  })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/A0uZqfO.png"><br><img src="https://i.imgur.com/lDm6hKO.png"><br>分別按下 a、b、c，可以知道 a = 97 、b = 98、c = 99</p>
+<hr>
+<h2 id="表單事件處理-onSubmit"><a href="#表單事件處理-onSubmit" class="headerlink" title="表單事件處理 onSubmit"></a>表單事件處理 onSubmit</h2><p>這可以應用在表單二次確認密碼的時候<br>寫出一個簡單的表單，並在判斷式內擷取密碼的值( value )</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"login"</span>&gt;</span></span><br><span class="line">  username:<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> /&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="line">  password:<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"password"</span> /&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="line">  password:<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"password1"</span> /&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">scrip</span>&gt;</span></span><br><span class="line">  let login = document.querySelector('.login');</span><br><span class="line">  login.addEventListener('submit',function(e){ let psw =</span><br><span class="line">  document.querySelector('.password'); let psw1 =</span><br><span class="line">  document.querySelector('.password1'); if(psw.value !== psw1.value){</span><br><span class="line">  alert('密碼錯誤'); e.preventDefault(); }else{ alert('密碼正確'); } })</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">scrip</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/wvGGdgy?editors=1010">codepen</a><br><img src="https://i.imgur.com/ES5AVUI.png"></p>
+<hr>
+<h2 id="事件傳遞機制-捕獲跟冒泡事件"><a href="#事件傳遞機制-捕獲跟冒泡事件" class="headerlink" title="事件傳遞機制-捕獲跟冒泡事件"></a>事件傳遞機制-捕獲跟冒泡事件</h2><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"one"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"two"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>click<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-javascript">  addEvent(<span class="hljs-string">'.one'</span>)</span></span><br><span class="line"><span class="hljs-javascript">  addEvent(<span class="hljs-string">'.two'</span>)</span></span><br><span class="line"><span class="hljs-javascript">  addEvent(<span class="hljs-string">'button'</span>)</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addEvent</span>(<span class="hljs-params">className</span>) </span>{</span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-built_in">document</span>.querySelector(className).addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-built_in">console</span>.log(className)</span></span><br><span class="line">    })</span><br><span class="line">  }</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/dyMMWVO?editors=1011">codepen</a></p>
+<p><img src="https://i.imgur.com/iSr9A3f.png"><br>當我點擊綠色區塊的時候只會跳出 one ，但點擊 click 時就會跳出上圖，但我明明只點 click 為甚麼會連帶影響到其他 class 區塊 ?</p>
+<p>因為這就是事件傳遞機制的捕獲跟冒泡事件</p>
+<p><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2017/07/15/javascript-event-propagation/">Huli 文章</a><br>下圖來源為 Huli 的文章<br><img src="https://i.imgur.com/V2KLVIV.png"><br>以下這段話擷取自 Huli 文章</p>
+<blockquote>
+<p>DOM 的事件在傳播時，會先從根節點開始往下傳遞到 target，這邊你如果加上事件的話，就會處於 CAPTURING_PHASE，捕獲階段。<br>target 就是你所點擊的那個目標，這時候在 target 身上所加的 eventListenr 會是 AT_TARGET 這一個 Phase。<br>你在點擊那一個 td 的時候，這一個點擊的事件會先從 window 開始往下傳，一直傳到 td 為止，到這邊就叫做 CAPTURING_PHASE，捕獲階段。<br>接著事件傳遞到 td 本身，這時候叫做 AT_TARGET。<br>最後事件會從 td 一路傳回去 window，這時候叫做 BUBBLING_PHASE，冒泡階段。<br>所以，在看一些講事件機制的文章的時候，都會看到一個口訣：先捕獲，再冒泡</p>
+</blockquote>
+<p>在監聽時函式後面加上 true 就是捕獲，false 是冒泡</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">addEvent(<span class="hljs-string">'.one'</span>)</span><br><span class="line">addEvent(<span class="hljs-string">'.two'</span>)</span><br><span class="line">addEvent(<span class="hljs-string">'button'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addEvent</span>(<span class="hljs-params">className</span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">document</span>.querySelector(className).addEventListener(</span><br><span class="line">    <span class="hljs-string">'click'</span>,</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(className, <span class="hljs-string">'捕獲'</span>)</span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-literal">true</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="hljs-built_in">document</span>.querySelector(className).addEventListener(</span><br><span class="line">    <span class="hljs-string">'click'</span>,</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(className, <span class="hljs-string">'冒泡'</span>)</span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-literal">false</span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/YzqqVjQ?editors=1011">codepen</a></p>
+<p>當我點擊 click</p>
+<p><img src="https://i.imgur.com/g7pwU5s.png"></p>
+<p>就算我把順序顛倒過來，它還是會先捕獲在冒泡，跟上圖一樣</p>
+<hr>
+<h2 id="資料來源-FE102-前端必備：JavaScript"><a href="#資料來源-FE102-前端必備：JavaScript" class="headerlink" title="資料來源: [FE102] 前端必備：JavaScript"></a><a target="_blank" rel="noopener" href="https://lidemy.com/courses/390588/lectures/9653894">資料來源: [FE102] 前端必備：JavaScript</a></h2></body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/eventListener/">#eventListener</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/callback-function/">#callback function</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/event/">#event</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/onSubmit/">#onSubmit</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2020/08/07/v-bind%20%E5%8F%8A%20v-on%20%E7%9A%84%E4%BD%BF%E7%94%A8/">Vue - 動態綁定及監聽</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2020/06/13/Javascript%20%E6%A0%B8%E5%BF%83%E7%AF%87-%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83/">JavaScript - 執行環境</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2020/07/16/JavaScript%20%E7%B6%B2%E9%A0%81%E4%BA%8B%E4%BB%B6%E8%99%95%E7%90%86/';
+        this.page.identifier = '2020/07/16/JavaScript 網頁事件處理/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

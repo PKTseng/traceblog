@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript 實作 - 猜數字 - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="每記錄一次就會比昨天的自己更加厲害">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript 實作 - 猜數字
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2021-01-31T16:00:00.000Z" itemprop="datePublished">2021年2月1日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><span>></span><a class="article-category-link" href="/categories/JavaScript/%E4%BD%9C%E5%93%81%E9%9B%86/">作品集</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分鐘 讀完 (約 760 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h2 id="功能敘述"><a href="#功能敘述" class="headerlink" title="功能敘述 :"></a>功能敘述 :</h2><ol>
+<li>猜數字，有固定範圍。</li>
+<li>猜錯會告知區間。</li>
+<li>如果猜的不是數字會顯示訊息提示。</li>
+</ol>
+<p><img src="https://i.imgur.com/vJSz4wN.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PKTseng/Web-Side-Project/tree/gh-pages/mission28">Github</a><br><a href="https://pktseng.github.io/Web-Side-Project/mission28/index.html">Demo</a></p>
+<a id="more"></a>
+
+<h2 id="模板架構"><a href="#模板架構" class="headerlink" title="模板架構"></a>模板架構</h2><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"img/mic.png"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"Speak"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>請猜一個 1 ~ 100 以內的數字<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>請對麥克風說出一個數字<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"msg"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"msg"</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- &lt;div&gt;You said:&lt;/div&gt;</span></span><br><span class="line"><span class="hljs-comment">  &lt;span class="box"&gt;Guessed number&lt;/span&gt;</span></span><br><span class="line"><span class="hljs-comment">  &lt;div&gt;number range&lt;/div&gt; --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="功能撰寫"><a href="#功能撰寫" class="headerlink" title="功能撰寫"></a>功能撰寫</h2><h3 id="1-取隨機數字，限定-1-100-以內"><a href="#1-取隨機數字，限定-1-100-以內" class="headerlink" title="1. 取隨機數字，限定 1~100 以內"></a>1. 取隨機數字，限定 1~100 以內</h3><p><code>Math.random</code> : 隨機產生出 0~1 之間的小數，因為小於 1 ，所以最大是 0.99。<br><code>Math.floor</code> : 回傳小於等於所給數字的最大整數。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRandomNumber</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">100</span>) + <span class="hljs-number">1</span> <span class="hljs-comment">// +1 範圍才會到 100</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-錄製麥克風的聲音"><a href="#2-錄製麥克風的聲音" class="headerlink" title="2. 錄製麥克風的聲音"></a>2. 錄製麥克風的聲音</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB">SpeechRecognition</a> : 在 Chrome 上使用語音辨識的功能，會把聲音發送到網頁裡面進行識別處理，要注意的是不能離線工作。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">window</span>.SpeechRecognition =</span><br><span class="line">  <span class="hljs-built_in">window</span>.SpeechRecognition || <span class="hljs-built_in">window</span>.webkitSpeechRecognition</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">let</span> recognition = <span class="hljs-keyword">new</span> <span class="hljs-built_in">window</span>.SpeechRecognition()</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-錄製聲音時會觸發條件"><a href="#3-錄製聲音時會觸發條件" class="headerlink" title="3. 錄製聲音時會觸發條件"></a>3. 錄製聲音時會觸發條件</h3><p><code>result</code> : 當事件觸發後會將值回傳，但值如果是 <code>undefined</code>，就沒辦法回傳</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">recognition.start()</span><br><span class="line">recognition.addEventListener(<span class="hljs-string">'result'</span>, onSpeak)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="4-觸發後抓取文字"><a href="#4-觸發後抓取文字" class="headerlink" title="4. 觸發後抓取文字"></a>4. 觸發後抓取文字</h3><p>當使用者說出文字後，經過網頁處裡會得到一個文字的 <code>value</code> ，這 <code>value</code> 值會顯示在 <code>results</code> 陣列裡面，用 <code>console</code> 查看 <code>e.results</code> 如下圖。<br><code>value</code> 的 <code>key</code> 為 <code>transcript</code> 。</p>
+<p>再用 callback function 的方式，將函示切分方便管理。<br><img src="https://i.imgur.com/jA7fJOw.png"></p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onSpeak</span>(<span class="hljs-params">e</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> msg = e.results[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>].transcript</span><br><span class="line"></span><br><span class="line">  writeMsg(msg)</span><br><span class="line">  checkMsg(msg)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="5-將文字顯示在-DOM-上"><a href="#5-將文字顯示在-DOM-上" class="headerlink" title="5. 將文字顯示在 DOM 上"></a>5. 將文字顯示在 DOM 上</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">writeMsg</span>(<span class="hljs-params">msg</span>) </span>{</span><br><span class="line">  msgEl.innerHTML = <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">    &lt;div&gt;You said: &lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;span class="box"&gt;<span class="hljs-subst">${msg}</span>&lt;/span&gt;</span></span><br><span class="line"><span class="hljs-string">  `</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="6-判斷錄製的文字是否符合標準"><a href="#6-判斷錄製的文字是否符合標準" class="headerlink" title="6. 判斷錄製的文字是否符合標準"></a>6. 判斷錄製的文字是否符合標準</h3><p>為防止說的不是數字或是大於區間，需要寫一點防範機制，如果使用者說了數字沒有答對，就要給點提示，讓使用者有方向。</p>
+<ol>
+<li>只能是數字</li>
+<li>只能在區間內</li>
+<li>提示數字要高還是低，讓使用者知道方向</li>
+</ol>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkMsg</span>(<span class="hljs-params">msg</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 主換數字型別</span></span><br><span class="line">  <span class="hljs-keyword">const</span> num = +msg</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 判斷說的是不是數字</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Number</span>.isNaN(num)) {</span><br><span class="line">    msgEl.innerHTML = <span class="hljs-string">`&lt;div&gt;請說數字 !&lt;/div&gt;`</span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 判斷數字區間</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (num &gt; <span class="hljs-number">100</span> || num &lt; <span class="hljs-number">1</span>) {</span><br><span class="line">    msgEl.innerHTML = <span class="hljs-string">`&lt;div&gt;數字只能介於 1~100 之間&lt;/div&gt;`</span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 開始猜測，決定數字要喊高還是喊低</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (num === randomNumber) {</span><br><span class="line">    <span class="hljs-built_in">document</span>.body.innerHTML = <span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">      &lt;h2&gt;恭喜猜中! &lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="hljs-string">      就是 <span class="hljs-subst">${num}</span>&lt;/h2&gt;</span></span><br><span class="line"><span class="hljs-string">      &lt;button class="play-again" id="play-again"&gt;再玩一次&lt;/button&gt;</span></span><br><span class="line"><span class="hljs-string">      `</span></span><br><span class="line">  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (num &gt; randomNumber) {</span><br><span class="line">    msgEl.innerHTML = <span class="hljs-string">`&lt;div&gt;再低&lt;/div&gt;`</span></span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    msgEl.innerHTML = <span class="hljs-string">`&lt;div&gt;再高&lt;/div&gt;`</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="7-再挑戰一次"><a href="#7-再挑戰一次" class="headerlink" title="7. 再挑戰一次"></a>7. 再挑戰一次</h3><p>一旦挑戰成功後，為了讓使用者可以在挑戰一次。將網頁刷新一次就可以了。<br>因為 btn 是用字串模板的方式載入的，所以不能用選擇器綁 DOM 元素，但可以用按鈕 id 的方式來識別。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">document</span>.body.addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">if</span> (e.target.id === <span class="hljs-string">'play-again'</span>) {</span><br><span class="line">    <span class="hljs-built_in">window</span>.location.reload()</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/result_event">SpeechRecognition: result event</a><br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition">SpeechRecognition</a><br><a target="_blank" rel="noopener" href="https://www.udemy.com/course/web-projects-with-vanilla-javascript/learn/lecture/17842354#overview">20 Web Projects With Vanilla JavaScript</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E4%BD%9C%E5%93%81%E9%9B%86/">#作品集</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/JavaScript/">#JavaScript</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/02/05/countdown/">JavaScript 實作 - 明年倒數計時</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/01/29/typingGmae/">JavaScript 實作 - 打字遊戲</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2021/02/01/%E7%8C%9C%E6%95%B8%E5%AD%97/';
+        this.page.identifier = '2021/02/01/猜數字/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

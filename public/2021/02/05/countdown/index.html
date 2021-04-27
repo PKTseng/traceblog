@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript 實作 - 明年倒數計時 - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="每記錄一次就會比昨天的自己更加厲害">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript 實作 - 明年倒數計時
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2021-02-04T16:00:00.000Z" itemprop="datePublished">2021年2月5日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a><span>></span><a class="article-category-link" href="/categories/JavaScript/%E4%BD%9C%E5%93%81%E9%9B%86/">作品集</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            6 分鐘 讀完 (約 942 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h2 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述:"></a>功能描述:</h2><ol>
+<li>網頁載入會顯示 loading 效果。</li>
+<li>loading 完會顯示距離明年倒數時間。</li>
+</ol>
+<p><img src="https://i.imgur.com/lv6I4AW.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PKTseng/Web-Side-Project/tree/gh-pages/mission29">Github</a><br><a href="https://pktseng.github.io/Web-Side-Project/mission29/index.html">Demo</a></p>
+<a id="more"></a>
+
+<h2 id="架構"><a href="#架構" class="headerlink" title="架構"></a>架構</h2><p>用容器把顯示內容放在裡面，方便 loading 效果結束時控制這個容器要不要顯示。<br>容器放置內容</p>
+<ol>
+<li>跨年標題。</li>
+<li>顯示倒數時間的天、時、分、秒。</li>
+<li>Loading 效果。</li>
+</ol>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Happy New Year<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"countdown"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"countdown"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"times"</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"days"</span>&gt;</span>00<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">small</span>&gt;</span>days<span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"times"</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"hours"</span>&gt;</span>00<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">small</span>&gt;</span>hours<span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"times"</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"minutes"</span>&gt;</span>00<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">small</span>&gt;</span>minutes<span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"times"</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"seconds"</span>&gt;</span>00<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">small</span>&gt;</span>seconds<span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./image/spinner.gif"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"loading"</span> /&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>架構完成圖<br><img src="https://i.imgur.com/TOa6NkA.png"></p>
+<h2 id="CSS-樣式"><a href="#CSS-樣式" class="headerlink" title="CSS 樣式"></a>CSS 樣式</h2><h3 id="偽元素-before-amp-after"><a href="#偽元素-before-amp-after" class="headerlink" title="偽元素 ( before &amp; after )"></a>偽元素 ( before &amp; after )</h3><p>因為背景圖片太亮的關係導致文字顏色不是很明顯，可以透過偽元素將背景圖片的顏色刷黑一點，再用<code> z-index</code> 屬性把文字呈現在最上層，這樣不只看到背景圖片又可以清楚看到文字。</p>
+<p>偽元素必須要有 <code>content</code> 屬性，如果沒有效果會呈現不出來。</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-tag">body</span><span class="hljs-selector-pseudo">::after</span> {</span><br><span class="line">  <span class="hljs-attribute">content</span>: <span class="hljs-string">''</span>;</span><br><span class="line">  <span class="hljs-attribute">position</span>: absolute;</span><br><span class="line">  <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;</span><br><span class="line">  <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.5</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>z-index: 數字</code> : 數字越大代表越優先被排在畫面最上層。</li>
+</ul>
+<p>我把文字內容放在 <code>container</code> 容器裡面，只要加入 <code>z-index</code> 屬性，就可以把文字內容放在暗色調的上一層。</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.container</span> {</span><br><span class="line">  <span class="hljs-attribute">z-index</span>: <span class="hljs-number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>沒用偽元素<br><img src="https://i.imgur.com/DKSnH25.png"></p>
+<p>有用偽元素，字體顏色會比較清楚<br><img src="https://i.imgur.com/C4gRveP.png"></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><h3 id="1-計算公式"><a href="#1-計算公式" class="headerlink" title="1. 計算公式"></a>1. 計算公式</h3><p>查看目前還剩多少時間到明年元旦，可以用以下公式</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 剩下時間 = 現在的年份 + 1 ( 明年元旦 ) - 現在的時間 ( 現在 )</span></span><br><span class="line"><span class="hljs-keyword">const</span> totalTime = newYear - newTime</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-現在時間"><a href="#2-現在時間" class="headerlink" title="2. 現在時間"></a>2. 現在時間</h3><p>用 <code>new Date</code> 抓取現在時間，有了現在時間的值再把值賦予到變數裡面，但要注意目前抓到的值是物件型別。<br><img src="https://i.imgur.com/1jB2jRX.png"></p>
+<p>有了完整時間後，可以用 <code>getFullYear</code> 抓取現在年份同時轉換型別。</p>
+<ul>
+<li><code>getFullYear</code> : 用來取得一個 Date 物件的<font color="#FF0000">年份</font>，時區是本地時間。</li>
+</ul>
+<p>沒有 <code>getFullYear</code> 抓到的值會試完整時間，型別是物件型式。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> times1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()</span><br><span class="line"><span class="hljs-built_in">console</span>.log(times1)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> times1)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/TmmMHfe.png"></p>
+<hr>
+<p>有 <code>getFullYear</code> 就抓取當前的年份，同時轉成數字型別，轉型別的目的是為了方便把目前時間 +1 變成明年。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> nowYear = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getFullYear()</span><br><span class="line"><span class="hljs-built_in">console</span>.log(nowYear)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> nowYear)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/H5hLrok.png"></p>
+<h3 id="3-明年元旦時間"><a href="#3-明年元旦時間" class="headerlink" title="3. 明年元旦時間"></a>3. 明年元旦時間</h3><p>把剛才用 <code>getFullYear</code> 轉換的年份 +1 就是明年年份。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 現在的年份 + 1 ( 明年 )</span></span><br><span class="line"><span class="hljs-keyword">const</span> newYear = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">`January 01 <span class="hljs-subst">${nowYear + <span class="hljs-number">1</span>}</span> 00:00:00`</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="4-倒數計時"><a href="#4-倒數計時" class="headerlink" title="4. 倒數計時"></a>4. 倒數計時</h3><p>用 <code>console</code> 查看 <code>totalTime</code> 為<font color="#FF0000">總毫秒</font>。<br>( 毫秒 / 1000 ) = 秒<br>( 毫秒 / 1000 ) % 60 = 當下的<font color="#FF0000">秒數</font>。<br>( 毫秒 / 1000 / 60 ) % 60 = 當下的<font color="#FF0000">分鐘數</font>。<br>( 毫秒 / 1000 / 60 /60 ) % 24 = 當下的<font color="#FF0000">小時數</font>。<br>( 毫秒 / 1000 / 60 /60 / 24) = 當下的<font color="#FF0000">天數</font>。<br>把算出來的值綁定到 dom 上，讓呈現在畫面上。</p>
+<p>在不管是小時、分鐘、秒數都會有個位數，出現個位數前面可加 <code>"0"</code>，用三源判斷式。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getTime</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> newTime = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()</span><br><span class="line">  <span class="hljs-comment">// console.log(newTime)</span></span><br><span class="line">  <span class="hljs-keyword">const</span> totalTime = newYear - newTime</span><br><span class="line">  <span class="hljs-comment">// console.log(totalTime)</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> day = <span class="hljs-built_in">Math</span>.floor(totalTime / <span class="hljs-number">1000</span> / <span class="hljs-number">60</span> / <span class="hljs-number">60</span> / <span class="hljs-number">24</span>)</span><br><span class="line">  <span class="hljs-comment">// console.log(day)</span></span><br><span class="line">  <span class="hljs-keyword">const</span> hours = <span class="hljs-built_in">Math</span>.floor(totalTime / <span class="hljs-number">1000</span> / <span class="hljs-number">60</span> / <span class="hljs-number">60</span>) % <span class="hljs-number">24</span></span><br><span class="line">  <span class="hljs-comment">// console.log(hours)</span></span><br><span class="line">  <span class="hljs-keyword">const</span> minutes = <span class="hljs-built_in">Math</span>.floor(totalTime / <span class="hljs-number">1000</span> / <span class="hljs-number">60</span>) % <span class="hljs-number">60</span></span><br><span class="line">  <span class="hljs-comment">// console.log(minutes)</span></span><br><span class="line">  <span class="hljs-keyword">const</span> seconds = <span class="hljs-built_in">Math</span>.floor(totalTime / <span class="hljs-number">1000</span>) % <span class="hljs-number">60</span></span><br><span class="line">  <span class="hljs-comment">// console.log(seconds)</span></span><br><span class="line"></span><br><span class="line">  dayEl.innerHTML = day</span><br><span class="line">  hourEl.innerHTML = hours &lt; <span class="hljs-number">10</span> ? <span class="hljs-string">'0'</span> + hours : hours</span><br><span class="line">  minutesEL.innerHTML = minutes &lt; <span class="hljs-number">10</span> ? <span class="hljs-string">'0'</span> + minutes : minutes</span><br><span class="line">  secondsEl.innerHTML = seconds &lt; <span class="hljs-number">10</span> ? <span class="hljs-string">'0'</span> + seconds : seconds</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// getTime() 每秒執行一次</span></span><br><span class="line"><span class="hljs-built_in">setInterval</span>(getTime, <span class="hljs-number">1000</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="5-loading-效果"><a href="#5-loading-效果" class="headerlink" title="5. loading 效果"></a>5. loading 效果</h3><p>每刷新頁面就會顯示一下 loading 效果。</p>
+<p>畫面載入一秒後移除 loading 效果，同時顯示時間。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  loading.remove()</span><br><span class="line">  countdown.style.display = <span class="hljs-string">'flex'</span></span><br><span class="line">}, <span class="hljs-number">1000</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.fooish.com/javascript/date/getFullYear.html">JavaScript Date getFullYear()</a><br><a target="_blank" rel="noopener" href="https://www.oxxostudio.tw/articles/201706/pseudo-element-1.html">CSS 偽元素 ( before 與 after )</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10191180">重新認識 JavaScript: Day 06 運算式與運算子</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E4%BD%9C%E5%93%81%E9%9B%86/">#作品集</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/JavaScrip/">#JavaScrip</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E5%81%BD%E5%85%83%E7%B4%A0/">#偽元素</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/02/08/dragdrop/">JavaScript 實作 - 拖曳效果</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/02/01/%E7%8C%9C%E6%95%B8%E5%AD%97/">JavaScript 實作 - 猜數字</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2021/02/05/countdown/';
+        this.page.identifier = '2021/02/05/countdown/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

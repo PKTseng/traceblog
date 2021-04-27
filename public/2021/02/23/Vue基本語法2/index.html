@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Vue - 基本語法( 二 ) - PK&#39;s 回憶錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="每記錄一次就會比昨天的自己更加厲害">
+
+
+
+
+
+
+
+
+
+<link rel="icon" href="/images/image.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="PK's 回憶錄" type="application/atom+xml">
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Ken&#39;s Blog
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章歸檔</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/ppoffice/hexo-theme-minos">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Vue - 基本語法( 二 )
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2021-02-22T16:00:00.000Z" itemprop="datePublished">2021年2月23日</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Vue/">Vue</a><span>></span><a class="article-category-link" href="/categories/Vue/computed/">computed</a><span>></span><a class="article-category-link" href="/categories/Vue/computed/v-on/">v-on</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            16 分鐘 讀完 (約 2365 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>在模板中可以直接使用插值語法顯示 data 中的資料，但是在某些狀況下有些資料還是要經過計算再顯示，或是多個資料結合或是重複顯示，這時候就會使用到 computed 計算屬性。</p>
+<p>還有 v-on 監聽事件的修飾符跟實際應用。</p>
+<a id="more"></a>
+
+<h2 id="計算屬性-computed"><a href="#計算屬性-computed" class="headerlink" title="計算屬性 ( computed )"></a>計算屬性 ( computed )</h2><h3 id="1-計算屬性的基本使用"><a href="#1-計算屬性的基本使用" class="headerlink" title="1. 計算屬性的基本使用"></a>1. 計算屬性的基本使用</h3><p>之前有提到過 mustache 語法，可以簡單的顯示資料，如果一個資料沒什麼大礙，但有很多資料的話呢? 以下示範。</p>
+<p><code>firstName</code> 跟 <code>LastName</code> 如果中間想有空格，會有兩種寫法，如下。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName +' '+ LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName}} {{LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    message: <span class="hljs-string">'Hello World'</span>,</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    LastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>會顯示下圖<br><img src="https://i.imgur.com/eW0GGIz.png"></p>
+<p>那如果今天要顯示 5~10 個呢? 如下</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName +' '+ LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName}} {{LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName}} {{LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName}} {{LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName}} {{LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName}} {{LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName}} {{LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣的話太長了，如果綁定的 key 值變更的話上面就要改 5 次，如果只需要改一次的話就會比較輕鬆，這時候有兩種方法可以使用 : methods 、 computed。</p>
+<h4 id="一-methods-寫法"><a href="#一-methods-寫法" class="headerlink" title="( 一 ) methods 寫法"></a>( 一 ) methods 寫法</h4><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName +' '+ LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName}} {{LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>methods 寫法 : {{getFullName()}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>上面第 4 行比第 2、3 行簡潔多了。<br>把重複的動作寫成函式，再呼叫實例裡面的函式。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    message: <span class="hljs-string">'Hello World'</span>,</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    LastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">  methods: {</span><br><span class="line">    getFullName() {</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-built_in">this</span>.LastName</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就算 data 裡面的 key 值變更，也只要更改 methods 裡面的的 key 值，而且只改一次就全部完成。</p>
+<p>顯示如下<br><img src="https://i.imgur.com/fPvACnw.png"></p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/BaQwOqZ?editors=1011">DEMO</a></p>
+<p>不過一般 mustache 語法裡面只通常只放變數，放函式感覺很奇怪，這時候就可以用 computed 。</p>
+<h4 id="二-computed"><a href="#二-computed" class="headerlink" title="( 二 ) computed"></a>( 二 ) computed</h4><p>當資料裡面產生<font color="#FF0000">變化</font>的時候才會執行。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName +' '+ LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName}} {{LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">&lt;!--   methods 有小括號，是函式 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>methods 寫法 : {{getFullName()}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">&lt;!--   computed 沒有小括號，是變數 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>computed 寫法 : {{fullName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    message: <span class="hljs-string">'Hello World'</span>,</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    LastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    fullName() {</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-built_in">this</span>.LastName</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">  methods: {</span><br><span class="line">    getFullName() {</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-built_in">this</span>.LastName</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>顯示如下。<br><img src="https://i.imgur.com/eitEos0.png"></p>
+<p><code>methods</code> 寫法會在 mustache 裡面加上小括號，那是一個函式，<br><code>computed</code> 寫法只會在 mustache 裡面放變數，不會有小括號。</p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/mdOqbLp?editors=1010">DEMO</a></p>
+<h3 id="2-計算屬性的複雜操作"><a href="#2-計算屬性的複雜操作" class="headerlink" title="2. 計算屬性的複雜操作"></a>2. 計算屬性的複雜操作</h3><p>計算陣列內的總價格</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Total Price : {{totalPrice}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    books: [</span><br><span class="line">      { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'html、css 書籍'</span>, <span class="hljs-attr">price</span>: <span class="hljs-number">110</span> },</span><br><span class="line">      { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'JavaScript 書籍'</span>, <span class="hljs-attr">price</span>: <span class="hljs-number">220</span> },</span><br><span class="line">      { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'Vue 書籍'</span>, <span class="hljs-attr">price</span>: <span class="hljs-number">330</span> },</span><br><span class="line">      { <span class="hljs-attr">id</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'React 書籍'</span>, <span class="hljs-attr">price</span>: <span class="hljs-number">440</span> },</span><br><span class="line">    ],</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    totalPrice() {</span><br><span class="line">      <span class="hljs-keyword">let</span> total = <span class="hljs-number">0</span></span><br><span class="line">      <span class="hljs-comment">// for( let i=0; i&lt; this.books.length; i++){</span></span><br><span class="line">      <span class="hljs-comment">//   total+= this.books[i].price</span></span><br><span class="line">      <span class="hljs-comment">// }</span></span><br><span class="line">      <span class="hljs-comment">// return total</span></span><br><span class="line"></span><br><span class="line">      <span class="hljs-comment">// for in 寫法</span></span><br><span class="line">      <span class="hljs-comment">// for( let i in this.books){</span></span><br><span class="line">      <span class="hljs-comment">//   total+= this.books[i].price</span></span><br><span class="line">      <span class="hljs-comment">// }</span></span><br><span class="line">      <span class="hljs-comment">// return total</span></span><br><span class="line"></span><br><span class="line">      <span class="hljs-comment">// for of 寫法</span></span><br><span class="line">      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> book <span class="hljs-keyword">of</span> <span class="hljs-built_in">this</span>.books) {</span><br><span class="line">        total += book.price</span><br><span class="line">      }</span><br><span class="line">      <span class="hljs-keyword">return</span> total</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/xR6WUEd.png"></p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/qBqVWLr?editors=1010">DEMO</a></p>
+<h3 id="3-計算屬性的-setter-amp-getter"><a href="#3-計算屬性的-setter-amp-getter" class="headerlink" title="3. 計算屬性的 setter &amp; getter"></a>3. 計算屬性的 setter &amp; getter</h3><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName + ' ' + lastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    lastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/mqO38pT.png"></p>
+<p>由於用 mustache 語法寫的話太複雜了，加上如果要重複利用的話有太冗長，所以都會使用 computed 計算屬性。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{firstName + ' ' + LastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>對應 computed 寫法: {{fullName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    lastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    fullName() {</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-built_in">this</span>.lastName</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>顯示下圖<br><img src="https://i.imgur.com/voadrLG.png"></p>
+<p>就跟上面所寫的一樣，不過接下來要加上 get &amp; set 屬性，這才是 computed 屬性的完整寫法。</p>
+<p>如果沒有 set 方法的話都是默認 get 方法的值，也就是<font color="#FF0000">只讀屬性</font>。<br>例如我只在 get 方法裡面返回 hello 字串。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// html 模板一樣</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    lastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    <span class="hljs-comment">// fullName(){</span></span><br><span class="line">    <span class="hljs-comment">//   return this.firstName+ ' '+ this.LastName</span></span><br><span class="line">    <span class="hljs-comment">// }</span></span><br><span class="line">    fullName: {</span><br><span class="line">      set() {},</span><br><span class="line">      get() {</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">'hello'</span></span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>顯示下圖<br><img src="https://i.imgur.com/CXbFJLV.png"></p>
+<p>一般情況下我們只會用到 get 方法，不會使用到 set 方法，因為不希望別人隨便設定一些奇怪的值，寫法如下。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    lastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    fullName: {</span><br><span class="line">      get() {</span><br><span class="line">        <span class="hljs-comment">// return 'hello'</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-built_in">this</span>.lastName</span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/QbBmqZq.png"></p>
+<p>也因為一般情況下都會使用到 get 方法，所以上面的寫法會簡化成最一開始的寫法。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    lastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    fullName() {</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-built_in">this</span>.lastName</span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-comment">// fullName:{</span></span><br><span class="line">    <span class="hljs-comment">// set(){</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// },</span></span><br><span class="line">    <span class="hljs-comment">// get(){</span></span><br><span class="line">    <span class="hljs-comment">// return 'hello'</span></span><br><span class="line">    <span class="hljs-comment">// return this.firstName+ ' '+ this.lastName</span></span><br><span class="line">    <span class="hljs-comment">// }</span></span><br><span class="line">    <span class="hljs-comment">// }</span></span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/AHOs9WN.png"></p>
+<p>所以當我們在使用 computed 屬性時， mustache 語法裡面就不需要家小括號，因為在使用 computed 屬性時他會去調用 <code>computed</code> 裡面的 <code>get</code>。</p>
+<p>那如果真想要在 computed 裡面加上 set 的話也可以。<br>在 set 方法裡面必須傳入參數。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{fullName}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    lastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    <span class="hljs-comment">// fullName(){</span></span><br><span class="line">    <span class="hljs-comment">//   return this.firstName+ ' '+ this.LastName</span></span><br><span class="line">    <span class="hljs-comment">// }</span></span><br><span class="line">    fullName: {</span><br><span class="line">      set(newValue) {</span><br><span class="line">        <span class="hljs-keyword">const</span> names = newValue.split(<span class="hljs-string">' '</span>)</span><br><span class="line">        <span class="hljs-built_in">this</span>.firstName = names[<span class="hljs-number">0</span>]</span><br><span class="line">        <span class="hljs-built_in">this</span>.lastName = names[<span class="hljs-number">1</span>]</span><br><span class="line">      },</span><br><span class="line">      get() {</span><br><span class="line">        <span class="hljs-comment">// return 'hello'</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-built_in">this</span>.lastName</span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在還沒 set 之前顯示下圖<br><img src="https://i.imgur.com/tCcyaJ6.png"></p>
+<p>還沒更改前是 Lebron Jamse ，用開發者工具使用更改 <code>fullName</code> 之後如下圖<br><img src="https://i.imgur.com/h2NFSD7.png"></p>
+<p>會改變的原因是更改了 <code>data</code> 裡面的 <code>firstName</code> &amp; <code>lastName</code> 這兩個更改就代表 <code>get</code> 方法裡面的 <code>this.firstName+ ' '+ this.lastName</code> 也會跟著更改，那<code>this.firstName+ ' '+ this.lastName</code> 更改就代表 <code>fullName</code> 被更改了。</p>
+<p>總結一下，90%情況下 set 方法是不會寫的所以會省略掉，那省略掉後就會有更簡潔的寫法，如下。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    firstName: <span class="hljs-string">'Lebron'</span>,</span><br><span class="line">    lastName: <span class="hljs-string">'Jamse'</span>,</span><br><span class="line">  },</span><br><span class="line">  computed: {</span><br><span class="line">    fullName() {</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-built_in">this</span>.LastName</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/WNoXbpj?editors=1011">DEMO</a></p>
+<h2 id="監聽事件"><a href="#監聽事件" class="headerlink" title="監聽事件"></a>監聽事件</h2><h3 id="1-v-on"><a href="#1-v-on" class="headerlink" title="1. v-on"></a>1. v-on</h3><p>監聽是前端在開發時常常用到的屬性，主要是監聽事件的發生，例如:滑鼠點擊、拖曳、鍵盤點擊…等等。</p>
+<p>那在 Vue 當中監聽事件的語法為 <code>v-on</code> ，語法糖為 <code>@</code>。</p>
+<p>以下示範用監聽滑鼠點擊來做一個簡單的計數器</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{{count}}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"add"</span>&gt;</span>+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"minus"</span>&gt;</span>-<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    count: <span class="hljs-number">0</span>,</span><br><span class="line">  },</span><br><span class="line">  methods: {</span><br><span class="line">    add() {</span><br><span class="line">      <span class="hljs-built_in">this</span>.count++</span><br><span class="line">    },</span><br><span class="line">    minus() {</span><br><span class="line">      <span class="hljs-built_in">this</span>.count--</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>利用間聽 click 事件來判斷當前要做的事。<br>當我們點擊 + 號按鈕的時候用 v- on 監聽同時綁定 add 事件，那 add 事件會綁定到 methods 裡面的函式，同理 - 號按鈕也一樣。<br><img src="https://i.imgur.com/USHnefS.png"></p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/OJbOVKa?editors=1011">DEMO</a></p>
+<p>以上皆為 v-on 最基本的使用。接下來要示範傳參數的問題。</p>
+<h3 id="2-v-on-參數問題"><a href="#2-v-on-參數問題" class="headerlink" title="2. v-on 參數問題"></a>2. v-on 參數問題</h3><p>在 methods 觸發 click 事件的時候，要注意傳參數的問題。</p>
+<ol>
+<li>如果不需要另外傳參數的話，那方法後面的小括號就甭加。</li>
+<li>如果需要傳入參數，同時又需要 event 這時就可以用 <code>$event</code> 傳到事件裡面。</li>
+</ol>
+<h4 id="一-事件不傳參數"><a href="#一-事件不傳參數" class="headerlink" title="( 一 )事件不傳參數"></a>( 一 )事件不傳參數</h4><p>以下示範在沒傳參數的情況下小括號加與不加的差別。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"btn1()"</span>&gt;</span>按鈕1<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"btn2"</span>&gt;</span>按鈕2<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {},</span><br><span class="line">  methods: {</span><br><span class="line">    btn1() {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是按鈕1，有小括號'</span>)</span><br><span class="line">    },</span><br><span class="line">    btn2() {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是按鈕2，沒有小括號'</span>)</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如下圖，結果是一樣的，所以在沒傳入參數的話一般都會省略小括號。<br><img src="https://i.imgur.com/rK9e5za.png"></p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/yLVPYWb?editors=1011">DEMO</a></p>
+<h4 id="二-定義事件，模板省略的小括號，但是-methods-本身需要傳入一個參數。"><a href="#二-定義事件，模板省略的小括號，但是-methods-本身需要傳入一個參數。" class="headerlink" title="( 二 ) 定義事件，模板省略的小括號，但是 methods 本身需要傳入一個參數。"></a>( 二 ) 定義事件，模板省略的小括號，但是 methods 本身需要傳入一個參數。</h4><p>把按鈕 2 的參數拿掉，用 methods 傳入參數的話怎麼樣?</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"btn1(123)"</span>&gt;</span>按鈕1<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"btn2"</span>&gt;</span>按鈕2<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {},</span><br><span class="line">  methods: {</span><br><span class="line">    btn1(abc) {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是按鈕1，有小括號'</span>, abc)</span><br><span class="line">    },</span><br><span class="line">    btn2(abc) {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是按鈕2，沒有小括號'</span>, abc)</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如下圖，用開發者工具看 log<br><img src="https://i.imgur.com/nuTivWl.png"></p>
+<p>點擊 按鈕 1 會正常出現，但是 按鈕 2 要用瀏覽器的開發者工具查看<br><img src="https://i.imgur.com/49MfVdV.png"></p>
+<p>會回傳 MouseEvent ，就是回傳瀏覽器的 event ，因為 Vue 會把默認瀏覽器產生的 event 事件當作參數傳到函式裡面。</p>
+<p>所以按鈕 2 的參數要寫 <code>event</code> 不是 <code>abc</code> 。</p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/dyOZYxa?editors=1011">DEMO</a></p>
+<h4 id="三-定義函式時，需要傳入參數跟-event"><a href="#三-定義函式時，需要傳入參數跟-event" class="headerlink" title="( 三 ) 定義函式時，需要傳入參數跟 event"></a>( 三 ) 定義函式時，需要傳入參數跟 event</h4><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"btn1(123, event)"</span>&gt;</span>按鈕1<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {},</span><br><span class="line">  methods: {</span><br><span class="line">    btn1(abc, event) {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是按鈕1，有小括號'</span>, abc, event)</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://i.imgur.com/SLBqBB9.png"></p>
+<p>不過傳入的第一個參數是數字型別，如果改成 abc 的話就會報錯，如下圖<br><img src="https://i.imgur.com/7w7itVd.png"></p>
+<p>因為改成 abc 後第一個參數就是<font color="#FF0000">變數</font>了，所以他會去 <code>data</code> 裡面找 value 值</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--   &lt;button @click='btn1(123, $event)'&gt;按鈕1&lt;/button&gt; --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"btn1(abc, $event)"</span>&gt;</span>按鈕1<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>在 <code>data</code> 裡面添加 <code>abc</code> 的 <code>value</code> 值。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue({</span><br><span class="line">  el: <span class="hljs-string">'#app'</span>,</span><br><span class="line">  data: {</span><br><span class="line">    abc: <span class="hljs-string">'第一個參數變成變數了'</span>,</span><br><span class="line">  },</span><br><span class="line">  methods: {</span><br><span class="line">    btn1(abc, event) {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'我是按鈕1，傳入兩個參數'</span>, abc, event)</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就可以正常顯示了。<br>同理第一個參數改成字串，那他就會顯示字串!<br><img src="https://i.imgur.com/LsK9vBj.png"></p>
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gleofgja/pen/bGBYErg?editors=1011">DEMO</a></p>
+<h3 id="3-v-on-修飾符"><a href="#3-v-on-修飾符" class="headerlink" title="3. v-on 修飾符"></a>3. v-on 修飾符</h3><p>在 JavaScript 裡面，都會監聽一些事件，例如 submit<br>但是我們都會用 event.preventDefault() 來阻擋事件冒泡，同理 v-on 也可以。<br>寫法也較為簡單:</p>
+<ol>
+<li><code>event.stopPropagation()</code> 會寫成 <code>.stop</code></li>
+<li><code>event.preventDefault()</code> 會寫成 <code>.prevent</code></li>
+<li>只觸發一次 <code>.once</code></li>
+<li>只監聽特定按鍵，如:<code> @keyup.enter</code> 、 <code>@keyup.按鍵碼</code></li>
+</ol>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV15741177Eh?p=14">2019 年最全最新 Vue、Vuejs 教程，从入门到精通</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10198999">[筆記][JavaScript]所謂的「停止事件」到底是怎麼一回事？</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/v-on/">#v-on</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Vue/">#Vue</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/computed/">#computed</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/02/24/Vue%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95(%20%E4%B8%89%20)/">Vue - 基本語法( 三 )</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/02/22/mvvm/">Vue - MVVM 簡介</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+<div class="comments">
+    <h3 class="title is-4">評論</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://pktseng.github.io/2021/02/23/Vue%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%952/';
+        this.page.identifier = '2021/02/23/Vue基本語法2/';
+        
+        this.language = 'en';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'PKTseng' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 PKTseng&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-minos">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-tw");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>
