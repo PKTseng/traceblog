@@ -106,4 +106,4 @@ theme: hexo-theme-minos-master
 deploy:
   type: git
   repo: https://github.com/PKTseng/PKTseng.github.io.git
-  branch: master
+  branch: main
