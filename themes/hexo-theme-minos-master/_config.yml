@@ -1,0 +1,30 @@
+logo:
+  text: PK's 回憶錄
+
+article:
+  readtime: true
+  highlight: atom-one-light
+
+menu:
+  文章歸檔: /archives
+  分類: /categories
+  標籤: /tags
+
+search:
+  type: insight
+
+toc: false
+
+plugins:
+  mathjax: true
+  katex: false
+  gallery: true
+  clipboard: true
+
+navbar_links:
+  GitHub:
+    icon: fab fa-github
+    url: https://github.com/PKTseng
+
+footer_links:
+  GitHub: https://github.com/PKTseng
