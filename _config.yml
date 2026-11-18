@@ -13,8 +13,8 @@ timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://pktseng.github.io/
-root: /
+url: https://pktseng.github.io/traceblog/
+root: /traceblog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -105,5 +105,5 @@ theme: hexo-theme-minos-master
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/PKTseng/PKTseng.github.io.git
-  branch: main
+  repo: https://github.com/PKTseng/traceblog.git
+  branch: gh-pages
